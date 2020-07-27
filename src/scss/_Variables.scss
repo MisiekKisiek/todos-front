@@ -1,0 +1,5 @@
+$loginHeight: 60px;
+$logoHeight: 100px;
+$headerHeight: calc(#{$loginHeight} + #{$logoHeight} + 20px);
+
+$footerHeight: 40px;

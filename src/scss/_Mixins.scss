@@ -1,0 +1,57 @@
+@mixin flex-mother($flex-direction: row, $justify-content: stretch, $align-items: stretch, $flex-wrap:nowrap){
+    display:flex;
+    flex-direction: $flex-direction;
+    justify-content: $justify-content;
+    align-items: $align-items;
+    flex-wrap: $flex-wrap;
+}
+
+@mixin input($height: 34px, $width: 180px){
+    position: relative;
+    border-radius: 17px;
+    label{
+        display: block;
+        position: relative;
+        width: $width;
+        height: $height;
+        border-radius: calc(#{$height} / 2);
+        border: 1px solid rgba(0,0,0,0.8);
+        input{
+            position: absolute;
+            top:0;
+            left: 0;
+            height: $height;
+            width: 100%;
+            padding: 0 $height 0 10px;
+            border: none;
+            font-size: calc((#{$height} - 9px) / 2);
+            background-color: transparent;
+        }
+    }
+    label:hover+button{
+        background-color: coral;
+    }
+    button{
+        position: absolute;
+        top:1px;
+        right: 1px;
+        width: calc(#{$height} - 2px);
+        height: calc(#{$height} - 2px);
+        line-height: calc(#{$height} - 8px);
+        padding: 1px;
+        border-radius: calc(#{$height} / 2);
+        border: none;
+        background-color: rgba(0,0,0,0.8);
+        color: #fff;
+        font-size: calc((#{$height} - 2px) / 2);
+        font-weight: bold;
+        transition: .3s;
+        cursor: pointer;
+    }
+    button:hover{
+        background-color: coral;
+    }
+    button.active{
+        background-color: coral;
+    }
+}

@@ -1,0 +1,24 @@
+@import './Header';
+@import './MainPage';
+@import './Footer';
+@import './Variables';
+@import './Mixins';
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    margin:0;
+    background-color: #f2f2f2;
+}
+
+.App{
+    @include flex-mother($flex-direction: column);
+    max-width: 1024px;
+    margin: auto;
+    margin-top: calc(#{$headerHeight} + 20px);
+    height: calc(100vh - #{$headerHeight} - 20px);
+}

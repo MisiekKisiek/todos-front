@@ -1,0 +1,25 @@
+@import './Variables';
+@import './Mixins';
+
+.footer{
+    flex-basis: $footerHeight;
+    position: relative;
+    &::before{
+        position: absolute;
+        top:0;
+        width: 40%;
+        height: 1px;
+        left:30%;
+        background-color: #555;
+        content:"";
+        display: block;
+    }
+    .footer__wrap{
+        text-align: center;
+        .footer__text{
+            line-height: $footerHeight;
+            margin: 0;
+            font-size: 12px;
+        }
+    }
+}
