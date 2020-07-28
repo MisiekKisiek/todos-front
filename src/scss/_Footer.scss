@@ -2,7 +2,8 @@
 @import './Mixins';
 
 .footer{
-    flex-basis: $footerHeight;
+    margin-top: 40px;
+    // flex-basis: calc(#{$footerHeight} - 40px);
     position: relative;
     &::before{
         position: absolute;
@@ -17,7 +18,7 @@
     .footer__wrap{
         text-align: center;
         .footer__text{
-            line-height: $footerHeight;
+            line-height: calc(#{$footerHeight} - 40px);
             margin: 0;
             font-size: 12px;
         }

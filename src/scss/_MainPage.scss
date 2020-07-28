@@ -3,10 +3,10 @@
 
 .main{
     flex-grow: 1;
-    margin-bottom: 40px;
     padding: 10px;
     background-color: #fff;
     border-radius: 5px;
+    max-height: calc(100% - #{$footerHeight});
     .main__logged-wrap{
         @include flex-mother();
         height: 100%;
@@ -19,10 +19,12 @@
                 height: 500px;
                 .main__logged-add-task{
                     @include input();
-                    margin: 20px 0;
                 }
                 .main__logged-search-task{
                     @include input();
+                }
+                .main__logged-filter{
+                    @include checkbox()
                 }
             }
         }
@@ -32,11 +34,55 @@
             right: 0;
             height: 30%;
             width: 1px;
-            background-color: #aaa;
+            background-color: #ddd;
             content:"";
             display: block;
         }
-        .main__logged-tasks{}
+        .main__logged-tasks{
+            flex-grow: 1;
+            padding: 20px 30px 30px 30px;
+            .main__logged-tasks-title{
+                text-align: center;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+            .main__logged-tasks-wrap{
+                height: 100%;
+                overflow-y: scroll;
+                scrollbar-width: thin;
+                .main__logged-tasks-list{
+                    list-style-type: none;
+                    padding: 0 20px;
+                    .main__logged-task{
+                        @include flex-mother();
+                        position: relative;
+                        min-height: 50px;
+                        border-bottom: 1px solid rgba(0,0,0,0.2);
+                        .main__logged-task-radio{
+                            flex-basis: 50px;
+                            @include radio(20px, 20px);
+                            flex-shrink: 0;
+                        }
+                        .main__logged-task-text{
+                            flex-grow: 1;
+                            padding-top: 14px;
+                            font-family: Arial, Helvetica, sans-serif;
+                            font-size: 13px;
+                        }
+                        .main__logged-task-date{
+                            position: absolute;
+                            top:0;
+                            right:0;
+                            font-family: Arial, Helvetica, sans-serif;
+                            font-size: 10px;
+                        }
+                    }
+                }
+            }
+        }
     }
     .main__unlogged-wrap{}
+}
+
+@media(max-width: 700px){
+
 }

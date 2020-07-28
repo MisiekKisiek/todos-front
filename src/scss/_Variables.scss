@@ -1,5 +1,13 @@
 $loginHeight: 60px;
-$logoHeight: 100px;
-$headerHeight: calc(#{$loginHeight} + #{$logoHeight} + 20px);
+$loginHeightLess700: 70px;
+$loginHeightLess700Scroll: 50px;
 
-$footerHeight: 40px;
+$logoHeight: 100px;
+$logoHeightLess700: 70px;
+$logoHeightLess700Scroll: 50px;
+
+$headerHeight: calc(#{$loginHeight} + #{$logoHeight} + 20px);
+$headerHeightLess700: calc(#{$loginHeightLess700} + 20px);
+$headerHeightLess700Scroll: calc(#{$loginHeightLess700Scroll} + 20px);
+
+$footerHeight: 80px;
