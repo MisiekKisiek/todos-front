@@ -1,108 +1,101 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import uuid from 'react-uuid';
+
+import TaskElement from './TaskElement';
 
 import { connect } from 'react-redux';
-import { searchTask, filterDone, filterUndone } from '../actions/index'
+import { searchTask, filterDone, filterUndone, addTask, changeStatus } from '../actions/index'
 
-class MainPageLogged extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            addTask: "",
-            searchTask: "",
-            filterDoneTasks: true,
-            filterUndoneTasks: true,
-        }
-    }
 
-    handleInputs = (e) => {
+const MainPageLogged = (props) => {
+
+    const [writeTask, setwriteTask] = useState("")
+
+    const handleInputs = (e) => {
         if (e.target.name === "add-task") {
-            this.setState({
-                addTask: e.target.value
-            })
+            setwriteTask(e.target.value)
         } else if (e.target.name === "search-task") {
-            this.setState({
-                searchTask: e.target.value
-            })
+            props.searchTask(e.target.value)
         } else if (e.target.name === "filter-done") {
-            this.setState({
-                filterDoneTasks: e.target.checked
-            })
+            props.filterDone(e.target.checked)
         }
         else if (e.target.name === "filter-undone") {
-            this.setState({
-                filterUndoneTasks: e.target.checked
-            })
+            props.filterUndone(e.target.checked)
         }
     }
 
-    render() {
-        return (<>
-            <div className="main__logged-wrap">
-                <nav className="main__logged-nav">
-                    <form action="" className="main__logged-form">
-                        <div className="main__logged-add-task">
-                            <label htmlFor="add-task">
-                                <input type="text" name="add-task" placeholder="Add task..." value={this.state.addTask} onChange={(e) => { this.handleInputs(e) }} />
-                            </label>
-                            <button><i className="fas fa-plus"></i></button>
-                        </div>
-                        <div className="main__logged-search-task">
-                            <label htmlFor="search-task">
-                                <input type="text" name="search-task" placeholder="Search task..." value={this.state.searchTask} onChange={(e) => { this.handleInputs(e) }} />
-                            </label>
-                            <button><i className="fas fa-search"></i></button>
-                        </div>
-                        <div className="main__logged-filter">
-                            <label htmlFor="filter-done">
-                                <input type="checkbox" name="filter-done"
-                                    value={this.state.filterDoneTasks}
-                                    onChange={(e) => { this.handleInputs(e) }}
-                                />
-                                <span></span>
-                                <p>Filter done tasks</p>
-                            </label>
-                        </div>
-                        <div className="main__logged-filter">
-                            <label htmlFor="filter-undone">
-                                <input type="checkbox" name="filter-undone" value={this.state.filterUndoneTasks} onChange={(e) => { this.handleInputs(e) }} />
-                                <span></span>
-                                <p>Filter undone tasks</p>
-                            </label>
-                        </div>
-                    </form>
-                </nav>
-                <section className="main__logged-tasks">
-                    <div className="main__logged-tasks-wrap">
-                        <ul className="main__logged-tasks-list">
-                            <li className="main__logged-task">
-                                <div className="main__logged-task-radio">
-                                    <label htmlFor="done-task">
-                                        <input type="radio" name="done-task" value="1" />
-                                        <span></span>
-                                    </label>
-                                </div>
-                                <div className="main__logged-task-text">Lorem ipsum dolor sit,</div>
-                                <div className="main__logged-task-date">2020-07-20</div>
-                            </li>
-                            <li className="main__logged-task">
-                                <div className="main__logged-task-radio">
-                                    <label htmlFor="done-task">
-                                        <input type="radio" name="done-task" value="2" />
-                                        <span></span>
-                                    </label>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </section>
-            </div></>);
+    const addTaskElement = (e) => {
+        e.preventDefault();
+        props.addTask(writeTask, uuid());
+        setwriteTask("")
+        console.log(props.state)
     }
+
+    const showAllTasks = (taskArray) => {
+        const taskList = taskArray.map(e =>
+            <TaskElement element={e} key={e.id} t={props.changeStatus}></TaskElement>
+        )
+        return taskList
+    }
+
+    return (<>
+        <div className="main__logged-wrap">
+            <nav className="main__logged-nav">
+                <form action="" className="main__logged-form">
+                    <div className="main__logged-add-task">
+                        <label htmlFor="add-task">
+                            <input type="text" name="add-task" placeholder="Add task..." value={writeTask} onChange={(e) => { handleInputs(e) }} />
+                        </label>
+                        <button onClick={(e) => { addTaskElement(e) }}>
+                            <i className="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div className="main__logged-search-task">
+                        <label htmlFor="search-task">
+                            <input type="text" name="search-task" placeholder="Search task..." value={props.searchTasks} onChange={(e) => { handleInputs(e) }} />
+                        </label>
+                        <button><i className="fas fa-search"></i></button>
+                    </div>
+                    <div className="main__logged-filter">
+                        <label htmlFor="filter-done">
+                            <input type="checkbox" name="filter-done"
+                                value={props.filterDoneTasks}
+                                onChange={(e) => { handleInputs(e) }}
+                            />
+                            <span></span>
+                            <p>Filter done tasks</p>
+                        </label>
+                    </div>
+                    <div className="main__logged-filter">
+                        <label htmlFor="filter-undone">
+                            <input type="checkbox" name="filter-undone" value={props.filterUndoneTasks} onChange={(e) => { handleInputs(e) }} />
+                            <span></span>
+                            <p>Filter undone tasks</p>
+                        </label>
+                    </div>
+                </form>
+            </nav>
+            <section className="main__logged-tasks">
+                <div className="main__logged-tasks-wrap">
+                    <ul className="main__logged-tasks-list">
+                        {showAllTasks(props.allTasks)}
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </>);
 }
 
 const MSTP = state => {
-    return ({ searchTask: state.filters.searchTask, filterDone: state })
+    return ({
+        searchTasks: state.filters.searchTask,
+        filterDoneTasks: state.filters.filterDone,
+        filterUndoneTasks: state.filters.filterUndone,
+        allTasks: state.allTasks,
+        state: state
+    })
 }
 
-const MDTP = { searchTask, filterDone, filterUndone }
+const MDTP = { searchTask, filterDone, filterUndone, addTask, changeStatus }
 
 export default connect(MSTP, MDTP)(MainPageLogged);

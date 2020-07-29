@@ -1,6 +1,17 @@
-export const addTask = (task) => ({
+export const addTask = (task, id) => ({
     type: "ADD_TASK",
-    task
+    task,
+    id
+})
+
+export const changeStatus = (checkedId) => ({
+    type: "CHANGE_STATUS",
+    checkedId
+})
+
+export const removeTask = (removeId) => ({
+    type: "REMOVE_TASK",
+    removeId
 })
 
 export const searchTask = (searchTask) => ({

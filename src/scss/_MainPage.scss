@@ -12,7 +12,7 @@
         height: 100%;
         .main__logged-nav{
             position: relative;
-            flex-basis: 25%;
+            flex-basis: 300px;
             border-radius: 5px;
             .main__logged-form{
                 @include flex-mother($flex-direction: column, $align-items: center);
@@ -40,6 +40,7 @@
         }
         .main__logged-tasks{
             flex-grow: 1;
+            max-width: calc(100% - 300px);
             padding: 20px 30px 30px 30px;
             .main__logged-tasks-title{
                 text-align: center;
@@ -47,26 +48,38 @@
             }
             .main__logged-tasks-wrap{
                 height: 100%;
+                max-width: 100%;
                 overflow-y: scroll;
                 scrollbar-width: thin;
                 .main__logged-tasks-list{
-                    list-style-type: none;
+                    max-width: 100%;
                     padding: 0 20px;
+                    list-style-type: none;
                     .main__logged-task{
                         @include flex-mother();
                         position: relative;
                         min-height: 50px;
+                        max-width: calc(100% - 20px);
+                        overflow-x: hidden;
                         border-bottom: 1px solid rgba(0,0,0,0.2);
-                        .main__logged-task-radio{
+                        .main__logged-task-checkbox{
                             flex-basis: 50px;
                             @include radio(20px, 20px);
                             flex-shrink: 0;
                         }
                         .main__logged-task-text{
-                            flex-grow: 1;
+                            flex-basis: calc(100% - 50px);
+                            max-width: calc(100% - 50px - 60px);
+                            // max-width: 80%;
+                            word-wrap: break-word;
+                            flex-grow: 0;
                             padding-top: 14px;
                             font-family: Arial, Helvetica, sans-serif;
                             font-size: 13px;
+                        }
+                        .main__logged-task-text.active{
+                            text-decoration: line-through;
+                            color: #777;
                         }
                         .main__logged-task-date{
                             position: absolute;
@@ -75,6 +88,47 @@
                             font-family: Arial, Helvetica, sans-serif;
                             font-size: 10px;
                         }
+                        .main__logged-task-edit{
+                            display: none;
+                            position: absolute;
+                            top: 60%;
+                            right: 20px;
+                            width: 24px;
+                            height: 24px;
+                            transform: translate(-50%,-50%);
+                            border: 0;
+                            border-radius: 50%;
+                            background-color: rgba(0,0,0,0.8);
+                            color: coral;
+                            font-size: 11px;
+                            cursor: pointer;
+                            transition: .2s;
+                        }
+                        .main__logged-task-edit:hover{
+                            background-color: rgba(0,0,0,0.6);
+                        }
+                        .main__logged-task-delete{
+                            display: none;
+                            position: absolute;
+                            top: 60%;
+                            right: -12px;
+                            width: 24px;
+                            height: 24px;
+                            transform: translate(-50%,-50%);
+                            border: 0;
+                            border-radius: 50%;
+                            background-color: rgba(0,0,0,0.8);
+                            color: coral;
+                            font-size: 11px;
+                            cursor: pointer;
+                            transition: .2s;
+                        }
+                        .main__logged-task-delete:hover{
+                            background-color: rgba(0,0,0,0.6);
+                        }
+                    }
+                    .main__logged-task:hover .main__logged-task-edit,.main__logged-task:hover .main__logged-task-delete{
+                        display: block;
                     }
                 }
             }
