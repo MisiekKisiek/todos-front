@@ -1,7 +1,7 @@
 export const allTasks = (state = [], action) => {
     switch (action.type) {
         case "ADD_TASK":
-            return [...state, { task: action.task, id: action.id, checked: false }]
+            return [...state, { task: action.task, id: action.id, date: action.date, checked: false }]
         case "CHANGE_STATUS":
             {
                 const ele = [...state]

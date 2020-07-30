@@ -6,10 +6,10 @@
     flex-wrap: $flex-wrap;
 }
 
-@mixin input($height: 34px, $width: 180px){
+@mixin input($height: 34px, $width: 180px,$margin-top: 20px){
     position: relative;
-    margin-top: 20px;
-    border-radius: 17px;
+    margin-top: $margin-top;
+    border-radius: calc(#{$height} / 2);
     label{
         display: block;
         position: relative;
@@ -28,46 +28,79 @@
             font-size: calc((#{$height} - 9px) / 2);
             background-color: transparent;
         }
+        button{
+            position: absolute;
+            top:0px;
+            right: 0px;
+            width: calc(#{$height} - 2px);
+            height: calc(#{$height} - 2px);
+            line-height: calc(#{$height} - 8px);
+            padding: 1px;
+            border-radius: calc(#{$height} / 2);
+            border: none;
+            background-color: rgba(0,0,0,0.8);
+            color: #fff;
+            font-size: calc((#{$height} - 2px) / 2);
+            font-weight: bold;
+            transition: .3s;
+            cursor: pointer;
+        }
+        button:hover{
+            background-color: coral;
+        }
+        button.active{
+            background-color: coral;
+        }
     }
-    label:hover+button{
-        background-color: coral;
-    }
-    button{
-        position: absolute;
-        top:1px;
-        right: 1px;
-        width: calc(#{$height} - 2px);
-        height: calc(#{$height} - 2px);
-        line-height: calc(#{$height} - 8px);
-        padding: 1px;
-        border-radius: calc(#{$height} / 2);
-        border: none;
-        background-color: rgba(0,0,0,0.8);
-        color: #fff;
-        font-size: calc((#{$height} - 2px) / 2);
-        font-weight: bold;
-        transition: .3s;
-        cursor: pointer;
-    }
-    button:hover{
-        background-color: coral;
-    }
-    button.active{
+    label:hover button{
         background-color: coral;
     }
 }
 
-@mixin checkbox(){
-    width: 180px;
-    min-height: 22px;
-    margin-top: 30px;
+@mixin inputDate($height: 20px, $width: 120px){
+    position: relative;
+    margin-top: 40px;
+    label{
+        display: block;
+        position: relative;
+        width: $width;
+        height: $height;
+        border-radius: calc(#{$height} / 2);
+        border: 1px solid rgba(0,0,0,0.8);
+        input{
+            position: absolute;
+            top:0;
+            left: 0;
+            height: $height;
+            padding: 0 $height 0 10px;
+            border: none;
+
+            font-size: calc((#{$height} + 4px) / 2);
+            background-color: transparent;
+        }
+        p{
+            position: absolute;
+            top:-20px;
+            left: 50%;
+            transform: translate(-50%,0);
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+        }
+    }
+    
+}
+
+@mixin checkbox($size:18px, $width: 180px, $margin-left: calc(#{$size} + 2px), $margin-top: 30px){
+    width: $width;
+    min-height: calc(#{$size} +4px);
+    margin-top: $margin-top;
     label {
         display: block;
         position: relative;
-        height: 20px;
+        height: $size;
         padding-left: 0px;
-        margin-left: 20px;
-        font-size: 22px;
+        margin-left: $margin-left;
+        font-size: calc(#{$size} + 4px);
         -webkit-user-select: none;
         -moz-user-select: none;
         -ms-user-select: none;
@@ -78,8 +111,8 @@
             top:1px;
             left:1px;
             opacity: 0;
-            height: 18px;
-            width: 18px;
+            height: $size;
+            width: $size;
             cursor: pointer;
         }
         span {
@@ -87,8 +120,8 @@
             position: absolute;
             top: 0;
             left: 0;
-            height: 18px;
-            width: 18px;
+            height: $size;
+            width: $size;
             border-radius: 5px;
             border: 1px solid black;
             cursor: pointer;
@@ -108,10 +141,10 @@
             display: block;
         }
         span:after {
-            left: 5px;
+            left: calc((#{$size} - 3px)/3 );
             top: 1px;
-            width: 5px;
-            height: 9px;
+            width: calc((#{$size} - 3px)/3 );
+            height: calc(#{$size} / 2 );
             border: solid white;
             border-width: 0 3px 3px 0;
             -webkit-transform: rotate(45deg);
@@ -122,7 +155,7 @@
             display: block;
             padding-left: 26px;
             padding-top: 1px;
-            font-size: 15px;
+            font-size: calc(#{$size} - 3px);
             font-family: Arial, Helvetica, sans-serif;
         }
     }
@@ -165,7 +198,7 @@
         &:hover input ~ span {
             background-color: #fff;
         }
-        & input:checked ~ span {
+        input:checked ~ span {
             background-color: rgba(0, 0, 0, 0.8);
         }
         span:after {
@@ -173,10 +206,10 @@
             position: absolute;
             display: none;
         }
-        & input:checked ~ span:after {
+        input:checked ~ span:after {
             display: block;
         }
-        & span:after {
+        span:after {
             top: calc((#{$height} - 2px) / 2);
             left: calc((#{$width}  - 2px) / 2);
             transform: translate(-50%,-50%);
@@ -186,4 +219,25 @@
             background: white;
         }
     }
+}
+
+@mixin taskButton($size: 24px,$top: 60%, $right: -12px){
+        display: none;
+        position: absolute;
+        top: $top;
+        right: $right;
+        width: $size;
+        height: $size;
+        transform: translate(-50%,-50%);
+        border: 0;
+        border-radius: 50%;
+        background-color: rgba(0,0,0,0.8);
+        color: coral;
+        font-size: calc((#{$size} / 2) - 1px);
+        cursor: pointer;
+        transition: .2s;
+    &:hover{
+        background-color: rgba(0,0,0,0.6);
+    }
+
 }

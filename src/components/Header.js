@@ -1,6 +1,9 @@
 import React from 'react';
 
-const Header = () => {
+import { searchTask } from '../actions'
+import { connect } from 'react-redux';
+
+const Header = (props) => {
 
     // const smallHeaderScroll = () => {
     //     const header = document.querySelector('.header');
@@ -26,13 +29,24 @@ const Header = () => {
                 </ul>
                 <div className="header__logged-search-task">
                     <label htmlFor="search-task">
-                        <input type="text" name="search-task" placeholder="Search task..." />
+                        <input type="text" name="search-task" placeholder="Search task..." value={props.searchTasks} onChange={(e) => props.searchTask(e.target.value)} />
+                        <button>
+                            <i className="fas fa-search"></i>
+                        </button>
                     </label>
-                    <button><i className="fas fa-search"></i></button>
+
                 </div>
             </div>
         </header>
     </>);
 }
 
-export default Header;
+const MSTP = state => {
+    return ({
+        searchTasks: state.filters.searchTask
+    })
+}
+
+const MDTP = { searchTask }
+
+export default connect(MSTP, MDTP)(Header);

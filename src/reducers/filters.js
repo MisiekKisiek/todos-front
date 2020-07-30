@@ -1,4 +1,4 @@
-export const filters = (state = { searchTask: "", filterDone: false, filterUndone: false }, action) => {
+export const filters = (state = { searchTask: "", filterDone: true, filterUndone: true }, action) => {
     switch (action.type) {
         case "SEARCH_TASK":
             return { searchTask: action.searchTask, filterDone: state.filterDone, filterUndone: state.filterUndone }

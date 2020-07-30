@@ -1,7 +1,8 @@
-export const addTask = (task, id) => ({
+export const addTask = (task, id, date = '') => ({
     type: "ADD_TASK",
     task,
-    id
+    id,
+    date
 })
 
 export const changeStatus = (checkedId) => ({
