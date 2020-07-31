@@ -33,6 +33,9 @@ const Header = (props) => {
                         <button>
                             <i className="fas fa-search"></i>
                         </button>
+                        <span>
+                            <i className="fas fa-times"></i>
+                        </span>
                     </label>
 
                 </div>

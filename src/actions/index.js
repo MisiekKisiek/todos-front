@@ -10,6 +10,18 @@ export const changeStatus = (checkedId) => ({
     checkedId
 })
 
+export const changeTask = (task, taskId) => ({
+    type: "CHANGE_TASK",
+    task,
+    taskId
+})
+
+export const changeDate = (date, dateId) => ({
+    type: 'CHANGE_DATE',
+    date,
+    dateId
+})
+
 export const removeTask = (removeId) => ({
     type: "REMOVE_TASK",
     removeId

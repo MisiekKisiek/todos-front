@@ -6,7 +6,7 @@ const Footer = () => {
             <div className="footer__wrap">
                 <p className="footer__text">
                     Powered by{" "}
-                    <a href="#">MisiekKisiek</a>
+                    {/* <a href="#">MisiekKisiek</a> */}
                     , 2020
                 </p>
             </div>

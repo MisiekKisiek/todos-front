@@ -9,7 +9,8 @@ import { searchTask, filterDone, filterUndone, addTask, changeStatus } from '../
 
 const MainPageLogged = (props) => {
 
-    const [writeTask, setwriteTask] = useState("")
+    const [writeTask, setwriteTask] = useState("");
+    const [writeSearchTask, setwriteSearchTask] = useState("");
     const [taskDate, settaskDate] = useState("");
 
     const handleInputs = (e) => {
@@ -18,7 +19,7 @@ const MainPageLogged = (props) => {
         } else if (e.target.name === "add-task-date") {
             settaskDate(e.target.value)
         } else if (e.target.name === "search-task") {
-            props.searchTask(e.target.value)
+            setwriteSearchTask(e.target.value)
         } else if (e.target.name === "filter-done") {
             props.filterDone(e.target.checked)
         } else if (e.target.name === "filter-undone") {
@@ -28,10 +29,25 @@ const MainPageLogged = (props) => {
 
     const addTaskElement = (e) => {
         e.preventDefault();
-        props.addTask(writeTask, uuid(), taskDate);
+        props.addTask(writeTask, uuid(), "Add deadline");
         setwriteTask("");
         settaskDate("");
-        console.log(props.state);
+    }
+
+    const searchTaskElement = (e) => {
+        e.preventDefault();
+        props.searchTask(writeSearchTask)
+        // props.searchTask("")
+    }
+
+    const clearInputValues = (e) => {
+        if (e.target.attributes.dataname.value === "add-task") {
+            setwriteTask('');
+        }
+        if (e.target.attributes.dataname.value === "search-task") {
+            setwriteSearchTask('');
+            props.searchTask('');
+        }
     }
 
     const showAllTasks = (taskArray) => {
@@ -42,48 +58,52 @@ const MainPageLogged = (props) => {
         if (!props.filterUndoneTasks) {
             taskList = taskList.filter(e => e.checked === true)
         }
+        if (props.searchTasks) {
+            taskList = taskList.filter(e => `${e.task}${e.date}`.toLowerCase().includes(props.searchTasks.toLowerCase()))
+        }
         taskList = taskList.map(e =>
             <TaskElement element={e} key={e.id}></TaskElement>
         )
         return taskList
     }
 
-    const handleSearchTask = (e, taskArray, searchValue) => {
-        e.preventDefault();
-        const taskArraySearch = taskArray.filter(e => `${e.task}${e.date}`.toLowerCase().includes(searchValue.toLowerCase()));
-        showAllTasks(taskArraySearch);
-        props.searchTask("")
-    }
+
 
     return (<>
         <div className="main__logged-wrap">
             <nav className="main__logged-nav">
-                <form action="" className="main__logged-form">
-                    {/* <div className="main__logged-add-task-date">
+                <div action="" className="main__logged-form">
+                    {/* <form className="main__logged-add-task-date">
                         <label htmlFor="add-task-date">
                             <p>Deadline</p>
-                            <input type="date" name="add-task-date" placeholder="Add task..." value={taskDate} onChange={(e) => { handleInputs(e) }} />
+                            <input type="date" name="add-task-date" value={taskDate} onChange={(e) => { handleInputs(e) }} />
                         </label>
-                    </div> */}
-                    <div className="main__logged-add-task">
+                    </form> */}
+                    <form className="main__logged-add-task">
                         <label htmlFor="add-task">
                             <input type="text" name="add-task" placeholder="Add task..." value={writeTask} onChange={(e) => { handleInputs(e) }} />
-                            <button onClick={(e) => { addTaskElement(e) }}>
+                            <button type="submit" onClick={(e) => { addTaskElement(e) }}>
                                 <i className="fas fa-plus"></i>
                             </button>
+                            <span dataname="add-task" onClick={(e) => { clearInputValues(e) }}>
+                                <i className="fas fa-times" dataname="add-task"></i>
+                            </span>
                         </label>
 
-                    </div>
+                    </form>
 
-                    <div className="main__logged-search-task">
+                    <form className="main__logged-search-task">
                         <label htmlFor="search-task">
-                            <input type="text" name="search-task" placeholder="Search task..." value={props.searchTasks} onChange={(e) => { handleInputs(e) }} />
-                            <button onClick={(e) => { handleSearchTask(e, props.allTasks, props.searchTasks) }}>
+                            <input type="text" name="search-task" placeholder="Search task..." value={writeSearchTask} onChange={(e) => { handleInputs(e) }} />
+                            <button type="submit" onClick={(e) => { searchTaskElement(e) }}>
                                 <i className="fas fa-search"></i>
                             </button>
+                            <span dataname="search-task" onClick={(e) => { clearInputValues(e) }}>
+                                <i className="fas fa-times" dataname="search-task"></i>
+                            </span>
                         </label>
 
-                    </div>
+                    </form>
                     <div className="main__logged-filter">
                         <label htmlFor="filter-done">
                             <input type="checkbox" name="filter-done"
@@ -102,7 +122,7 @@ const MainPageLogged = (props) => {
                             <p>Show undone tasks</p>
                         </label>
                     </div>
-                </form>
+                </div>
             </nav>
             <section className="main__logged-tasks">
                 <div className="main__logged-tasks-wrap">

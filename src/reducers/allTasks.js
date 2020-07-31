@@ -8,6 +8,18 @@ export const allTasks = (state = [], action) => {
                 ele[state.findIndex(e => e.id === action.checkedId)].checked = !ele[state.findIndex(e => e.id === action.checkedId)].checked;
                 return ele
             }
+        case "CHANGE_TASK":
+            {
+                const ele = [...state]
+                ele[state.findIndex(e => e.id === action.taskId)].task = action.task
+                return ele
+            }
+        case "CHANGE_DATE":
+            {
+                const ele = [...state]
+                ele[state.findIndex(e => e.id === action.dateId)].date = action.date
+                return ele
+            }
         case "REMOVE_TASK":
             {
                 const ele = [...state]

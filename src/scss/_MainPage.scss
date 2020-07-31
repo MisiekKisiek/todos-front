@@ -71,6 +71,7 @@
                             flex-shrink: 0;
                         }
                         .main__logged-task-text{
+                            position: relative;
                             @include flex-mother($flex-direction:column,$justify-content:center);
                             flex-basis: calc(100% - 50px);
                             max-width: calc(100% - 50px - 60px);
@@ -79,6 +80,22 @@
                             padding: 10px 0;
                             font-family: Arial, Helvetica, sans-serif;
                             font-size: 13px;
+                            span{
+                                display: block;
+                            }
+                            textarea{
+                                position: absolute;
+                                top:14px;
+                                left:0;
+                                display: none;
+                                width: 100%;
+                                max-height: 33px;
+                                border-radius: 5px;
+                                border: 1px solid rgba(0,0,0,0.8);
+                                resize: none;
+                                font-family: Arial, Helvetica, sans-serif;
+                                font-size: 11px;
+                            }
                         }
                         .main__logged-task-text.active{
                             text-decoration: line-through;
@@ -90,19 +107,77 @@
                             right:0;
                             font-family: Arial, Helvetica, sans-serif;
                             font-size: 10px;
+                            span{
+                                display: block;
+                            }
+                            input{
+                                display: none;
+                                height: 12px;
+                                font-size: 10px;
+                                border-radius: 5px;
+                                border: 1px solid rgba(0,0,0,0.8);
+                                background-color: transparent;
+                            }
+                            input:focus{
+                                box-shadow: none;
+                                outline: none; 
+                            }
                         }
                         .main__logged-task-edit{
                             @include taskButton($right: 20px);
                         }
                         .main__logged-task-edit-accept{
-                            @include taskButton();
+                            @include taskButton($right: 20px, $background-color: rgb(67, 223, 67));
+                            display: none;
+                        }
+                        .main__logged-task-edit-discard{
+                            @include taskButton( $background-color: rgb(238, 44, 44));
+                            display: none;
                         }
                         .main__logged-task-delete{
                             @include taskButton();
                         }
+                        &:hover .main__logged-task-edit,&:hover .main__logged-task-delete{
+                            display: block;
+                        }
                     }
                     .main__logged-task:hover .main__logged-task-edit,.main__logged-task:hover .main__logged-task-delete{
                         display: block;
+                    }
+                    .main__logged-task--edit{
+                        .main__logged-task-checkbox{
+                        }
+                        .main__logged-task-text{
+                            span{
+                                display: none;
+                            }
+                            textarea{
+                                display: block;
+                            }
+                        }
+                        .main__logged-task-text.active{
+                        }
+                        .main__logged-task-date{
+                            span{
+                                display: none;
+                            }
+                            input{
+                                display: block;
+                            }
+                        }
+                        .main__logged-task-edit{
+                        }
+                        .main__logged-task-edit-accept{
+                            display: block;
+                        }
+                        .main__logged-task-edit-discard{
+                            display: block;
+                        }
+                        .main__logged-task-delete{
+                        }
+                        &:hover .main__logged-task-edit,&:hover .main__logged-task-delete{
+                            display:  none;
+                        }
                     }
                 }
             }
