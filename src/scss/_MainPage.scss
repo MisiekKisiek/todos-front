@@ -1,472 +1,482 @@
-@import './Variables';
-@import './Mixins';
+@import "./Variables";
+@import "./Mixins";
 
-.main{
-    flex-grow: 1;
-    padding: 10px;
-    background-color: #fff;
-    border-radius: 5px;
-    max-height: calc(100% - #{$footerHeight});
-    .main__logged-wrap{
-        @include flex-mother();
+.main {
+  flex-grow: 1;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 5px;
+  max-height: calc(100% - #{$footerHeight});
+  .main__logged-wrap {
+    @include flex-mother();
+    height: 100%;
+    .main__logged-nav {
+      position: relative;
+      flex-basis: 300px;
+      border-radius: 5px;
+      .main__logged-form {
+        @include flex-mother($flex-direction: column, $align-items: center);
+        height: 500px;
+        .main__logged-add-task {
+          @include input();
+        }
+        .main__logged-add-task-date {
+          @include inputDate();
+        }
+        .main__logged-search-task {
+          @include input();
+        }
+        .main__logged-filter {
+          @include checkbox();
+        }
+      }
+    }
+    .main__logged-nav:before {
+      position: absolute;
+      top: 20px;
+      right: 0;
+      height: 30%;
+      width: 1px;
+      background-color: #ddd;
+      content: "";
+      display: block;
+    }
+    .main__logged-tasks {
+      flex-grow: 1;
+      max-width: calc(100% - 300px);
+      padding: 20px 30px 20px 30px;
+      .main__logged-tasks-wrap {
         height: 100%;
-        .main__logged-nav{
+        max-width: 100%;
+        overflow-y: scroll;
+        scrollbar-width: thin;
+        &::-webkit-scrollbar {
+          width: 6px;
+        }
+        &::-webkit-scrollbar-track {
+          background: #f1f1f1;
+          border-radius: 3px;
+        }
+        &::-webkit-scrollbar-thumb {
+          background: rgba(0, 0, 0, 0.2);
+          border-radius: 3px;
+        }
+        .main__logged-tasks-list {
+          max-width: 100%;
+          padding: 0 20px;
+          list-style-type: none;
+          .main__logged-task {
+            @include flex-mother();
             position: relative;
-            flex-basis: 300px;
-            border-radius: 5px;
-            .main__logged-form{
-                @include flex-mother($flex-direction: column, $align-items: center);
-                height: 500px;
-                .main__logged-add-task{
-                    @include input();
-                }
-                .main__logged-add-task-date{
-                    @include inputDate()
-                }
-                .main__logged-search-task{
-                    @include input();
-                }
-                .main__logged-filter{
-                    @include checkbox()
-                }
+            min-height: 50px;
+            max-width: calc(100% - 20px);
+            overflow-x: hidden;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+            .main__logged-task-checkbox {
+              flex-basis: 50px;
+              @include radio(20px, 20px);
+              flex-shrink: 0;
             }
-        }
-        .main__logged-nav:before{
-            position: absolute;
-            top:20px;
-            right: 0;
-            height: 30%;
-            width: 1px;
-            background-color: #ddd;
-            content:"";
-            display: block;
-        }
-        .main__logged-tasks{
-            flex-grow: 1;
-            max-width: calc(100% - 300px);
-            padding: 20px 30px 20px 30px;
-            .main__logged-tasks-title{
-                text-align: center;
-                font-family: Arial, Helvetica, sans-serif;
-            }
-            .main__logged-tasks-wrap{
-                height: 100%;
-                max-width: 100%;
-                overflow-y: scroll;
-                scrollbar-width: thin;
-                .main__logged-tasks-list{
-                    max-width: 100%;
-                    padding: 0 20px;
-                    list-style-type: none;
-                    .main__logged-task{
-                        @include flex-mother();
-                        position: relative;
-                        min-height: 50px;
-                        max-width: calc(100% - 20px);
-                        overflow-x: hidden;
-                        border-bottom: 1px solid rgba(0,0,0,0.2);
-                        .main__logged-task-checkbox{
-                            flex-basis: 50px;
-                            @include radio(20px, 20px);
-                            flex-shrink: 0;
-                        }
-                        .main__logged-task-text{
-                            position: relative;
-                            @include flex-mother($flex-direction:column,$justify-content:center);
-                            flex-basis: calc(100% - 50px);
-                            max-width: calc(100% - 50px - 60px);
-                            word-wrap: break-word;
-                            flex-grow: 0;
-                            padding: 10px 0;
-                            font-family: Arial, Helvetica, sans-serif;
-                            font-size: 13px;
-                            span{
-                                display: block;
-                            }
-                            textarea{
-                                position: absolute;
-                                top:14px;
-                                left:0;
-                                display: none;
-                                width: 100%;
-                                max-height: 33px;
-                                border-radius: 5px;
-                                border: 1px solid rgba(0,0,0,0.8);
-                                resize: none;
-                                font-family: Arial, Helvetica, sans-serif;
-                                font-size: 11px;
-                            }
-                        }
-                        .main__logged-task-text.active{
-                            text-decoration: line-through;
-                            color: #777;
-                        }
-                        .main__logged-task-date{
-                            position: absolute;
-                            top:0;
-                            right:0;
-                            font-family: Arial, Helvetica, sans-serif;
-                            font-size: 10px;
-                            span{
-                                display: block;
-                            }
-                            input{
-                                display: none;
-                                height: 12px;
-                                font-size: 10px;
-                                border-radius: 5px;
-                                border: 1px solid rgba(0,0,0,0.8);
-                                background-color: transparent;
-                            }
-                            input:focus{
-                                box-shadow: none;
-                                outline: none; 
-                            }
-                        }
-                        .main__logged-task-edit{
-                            @include taskButton($right: 20px);
-                        }
-                        .main__logged-task-edit-accept{
-                            @include taskButton($right: 20px, $background-color: rgb(67, 223, 67));
-                            display: none;
-                        }
-                        .main__logged-task-edit-discard{
-                            @include taskButton( $background-color: rgb(238, 44, 44));
-                            display: none;
-                        }
-                        .main__logged-task-delete{
-                            @include taskButton();
-                        }
-                        &:hover .main__logged-task-edit,&:hover .main__logged-task-delete{
-                            display: block;
-                        }
-                    }
-                    .main__logged-task:hover .main__logged-task-edit,.main__logged-task:hover .main__logged-task-delete{
-                        display: block;
-                    }
-                    .main__logged-task--edit{
-                        .main__logged-task-checkbox{
-                        }
-                        .main__logged-task-text{
-                            span{
-                                display: none;
-                            }
-                            textarea{
-                                display: block;
-                            }
-                        }
-                        .main__logged-task-text.active{
-                        }
-                        .main__logged-task-date{
-                            span{
-                                display: none;
-                            }
-                            input{
-                                display: block;
-                            }
-                        }
-                        .main__logged-task-edit{
-                        }
-                        .main__logged-task-edit-accept{
-                            display: block;
-                        }
-                        .main__logged-task-edit-discard{
-                            display: block;
-                        }
-                        .main__logged-task-delete{
-                        }
-                        &:hover .main__logged-task-edit,&:hover .main__logged-task-delete{
-                            display:  none;
-                        }
-                    }
-                }
-            }
-        }
-    }
-    .main__unlogged-wrap{}
-}
-
-@media (max-width: 1024px){
-    .main{
-        .main__logged-wrap{
-            .main__logged-nav{
-                .main__logged-form{
-                    .main__logged-add-task{
-                    }
-                    .main__logged-add-task-date{
-                    }
-                    .main__logged-search-task{
-                    }
-                    .main__logged-filter{
-                    }
-                }
-            }
-            .main__logged-nav:before{
-            }
-            .main__logged-tasks{
-                
-                .main__logged-tasks-title{
-
-                }
-                .main__logged-tasks-wrap{
-
-                    .main__logged-tasks-list{
-                        padding: 0;
-                        .main__logged-task{
-
-                            .main__logged-task-checkbox{
-                            }
-                            .main__logged-task-text{
-
-                            }
-                            .main__logged-task-text.active{
-
-                            }
-                            .main__logged-task-date{
-                                
-                            }
-                            .main__logged-task-edit{
-                                display: block;
-                                color: white;
-                            }
-                            .main__logged-task-edit-accept{
-                            }
-                            .main__logged-task-delete{
-                                display: block;
-                                color: white;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        .main__unlogged-wrap{}
-    }
-}
-
-@media(max-width: 900px){
-    .main{
-        .main__logged-wrap{
-            .main__logged-nav{
-                .main__logged-form{
-                    // padding-right: 20px;
-                    .main__logged-add-task{
-                    }
-                    .main__logged-add-task-date{
-                    }
-                    .main__logged-search-task{
-                    }
-                    .main__logged-filter{
-                    }
-                }
-            }
-            .main__logged-nav:before{
-            }
-            .main__logged-tasks{
-                
-                .main__logged-tasks-title{
-
-                }
-                .main__logged-tasks-wrap{
-
-                    .main__logged-tasks-list{
-                        padding: 0;
-                        .main__logged-task{
-
-                            .main__logged-task-checkbox{
-                            }
-                            .main__logged-task-text{
-
-                            }
-                            .main__logged-task-text.active{
-
-                            }
-                            .main__logged-task-date{
-
-                            }
-                            .main__logged-task-edit{
-                            }
-                            .main__logged-task-edit-accept{
-                            }
-                            .main__logged-task-delete{
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        .main__unlogged-wrap{}
-    }
-}
-
-@media(max-width: 700px){
-    .main{
-        max-height: calc(100% - #{$footerHeightLess700});
-        .main__logged-wrap{
-            @include flex-mother($flex-direction:column);
-            .main__logged-nav{
-                flex-basis: auto;
-                .main__logged-form{
-                    @include flex-mother($flex-direction: row, $align-items: center,$justify-content: space-around, $flex-wrap: wrap);
-                    height: auto;
-                    padding: 0 8%;
-                    .main__logged-add-task{
-                        @include input($height: 30px, $width: 140px);
-                        flex-basis: 34%;
-                    }
-                    .main__logged-add-task-date{
-                        @include inputDate()
-                    }
-                    .main__logged-search-task{
-                        @include input($height: 30px, $width: 140px);
-                        flex-basis: 34%;
-                    }
-                    .main__logged-filter{
-                        @include checkbox($size: 14px,$width: 150px, $margin-left:8px);
-                        flex-basis: 34%;
-                    }
-                }
-            }
-            .main__logged-nav:before{
+            .main__logged-task-text {
+              position: relative;
+              @include flex-mother(
+                $flex-direction: column,
+                $justify-content: center
+              );
+              flex-basis: calc(100% - 50px);
+              max-width: calc(100% - 50px - 60px);
+              word-wrap: break-word;
+              flex-grow: 0;
+              padding: 10px 0;
+              font-family: Arial, Helvetica, sans-serif;
+              font-size: 13px;
+              span {
+                display: block;
+              }
+              textarea {
+                position: absolute;
+                top: 14px;
+                left: 0;
                 display: none;
+                width: 100%;
+                max-height: 33px;
+                border-radius: 5px;
+                border: 1px solid rgba(0, 0, 0, 0.8);
+                resize: none;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 11px;
+              }
             }
-            .main__logged-tasks{
-                max-height: calc(100% - 120px);
-                max-width: calc(100%);
-                .main__logged-tasks-title{
-                }
-                .main__logged-tasks-wrap{
-                    .main__logged-tasks-list{
-                        padding: 0 20px 0 0;
-                        .main__logged-task{
-                            max-width: 100%;
-                            .main__logged-task-checkbox{
-                            }
-                            .main__logged-task-text{
-                            }
-                            .main__logged-task-text.active{
-                            }
-                            .main__logged-task-date{
-                            }
-                            .main__logged-task-edit{
-                            }
-                            .main__logged-task-edit-accept{
-                            }
-                            .main__logged-task-delete{
-                            }
-                        }
-                    }
-                }
+            .main__logged-task-text.active {
+              text-decoration: line-through;
+              color: #777;
             }
+            .main__logged-task-date {
+              position: absolute;
+              top: 0;
+              right: 0;
+              font-family: Arial, Helvetica, sans-serif;
+              font-size: 10px;
+              span {
+                display: block;
+              }
+              input {
+                display: none;
+                height: 12px;
+                font-size: 10px;
+                border-radius: 5px;
+                border: 1px solid rgba(0, 0, 0, 0.8);
+                background-color: transparent;
+              }
+              input:focus {
+                box-shadow: none;
+                outline: none;
+              }
+            }
+            .main__logged-task-edit {
+              @include taskButton($right: 20px);
+            }
+            .main__logged-task-edit-accept {
+              @include taskButton(
+                $right: 20px,
+                $background-color: rgb(67, 223, 67)
+              );
+              display: none;
+            }
+            .main__logged-task-edit-discard {
+              @include taskButton($background-color: rgb(238, 44, 44));
+              display: none;
+            }
+            .main__logged-task-delete {
+              @include taskButton();
+            }
+            &:hover .main__logged-task-edit,
+            &:hover .main__logged-task-delete {
+              display: block;
+            }
+          }
+          .main__logged-task:hover .main__logged-task-edit,
+          .main__logged-task:hover .main__logged-task-delete {
+            display: block;
+          }
+          .main__logged-task--edit {
+            .main__logged-task-checkbox {
+            }
+            .main__logged-task-text {
+              span {
+                display: none;
+              }
+              textarea {
+                display: block;
+              }
+            }
+            .main__logged-task-text.active {
+            }
+            .main__logged-task-date {
+              span {
+                display: none;
+              }
+              input {
+                display: block;
+              }
+            }
+            .main__logged-task-edit {
+            }
+            .main__logged-task-edit-accept {
+              display: block;
+            }
+            .main__logged-task-edit-discard {
+              display: block;
+            }
+            .main__logged-task-delete {
+            }
+            &:hover .main__logged-task-edit,
+            &:hover .main__logged-task-delete {
+              display: none;
+            }
+          }
         }
-        .main__unlogged-wrap{}
+      }
     }
+  }
+  .main__unlogged-wrap {
+  }
 }
 
-@media(max-height: 550px) and (max-width: 1024px){
-    .main{
-        max-height: none;
-        .main__logged-wrap{
-            .main__logged-nav{
-                .main__logged-form{
-                    .main__logged-add-task{
-                    }
-                    .main__logged-add-task-date{
-                    }
-                    .main__logged-search-task{
-                    }
-                    .main__logged-filter{
-                    }
-                }
-            }
-            .main__logged-nav:before{
-            }
-            .main__logged-tasks{
-                max-height: auto;
-                .main__logged-tasks-title{
-                }
-                .main__logged-tasks-wrap{
-                    overflow-y: visible;
-                    .main__logged-tasks-list{
-                        .main__logged-task{
-                            .main__logged-task-checkbox{
-                            }
-                            .main__logged-task-text{
-                            }
-                            .main__logged-task-text.active{
-                            }
-                            .main__logged-task-date{
-                            }
-                            .main__logged-task-edit{
-                            }
-                            .main__logged-task-edit-accept{
-                            }
-                            .main__logged-task-delete{
-                            }
-                        }
-                    }
-                }
-            }
+@media (max-width: 1024px) {
+  .main {
+    .main__logged-wrap {
+      .main__logged-nav {
+        .main__logged-form {
+          .main__logged-add-task {
+          }
+          .main__logged-add-task-date {
+          }
+          .main__logged-search-task {
+          }
+          .main__logged-filter {
+          }
         }
-        .main__unlogged-wrap{}
+      }
+      .main__logged-nav:before {
+      }
+      .main__logged-tasks {
+        .main__logged-tasks-title {
+        }
+        .main__logged-tasks-wrap {
+          .main__logged-tasks-list {
+            padding: 0;
+            .main__logged-task {
+              .main__logged-task-checkbox {
+              }
+              .main__logged-task-text {
+              }
+              .main__logged-task-text.active {
+              }
+              .main__logged-task-date {
+              }
+              .main__logged-task-edit {
+                display: block;
+                color: white;
+              }
+              .main__logged-task-edit-accept {
+              }
+              .main__logged-task-delete {
+                display: block;
+                color: white;
+              }
+            }
+          }
+        }
+      }
     }
+    .main__unlogged-wrap {
+    }
+  }
 }
 
-@media (max-width: 400px){
-    .main{
-        .main__logged-wrap{
-            .main__logged-nav{
-                .main__logged-form{
-                    @include flex-mother($flex-direction: column, $align-items: center);
-                    .main__logged-add-task{
-                        @include input($height: 26px, $width: 180px, $margin-top: 10px);
-                    }
-                    .main__logged-add-task-date{
-                    }
-                    .main__logged-search-task{
-                        display: none;
-                    }
-                    .main__logged-filter{
-                        @include checkbox($size: 14px,$width: 150px, $margin-left:8px, $margin-top: 20px);
-                    }
-                }
-            }
-            .main__logged-nav:before{
-            }
-            .main__logged-tasks{
-                padding: 20px 0 30px 0;
-                .main__logged-tasks-title{
-
-                }
-                .main__logged-tasks-wrap{
-
-                    .main__logged-tasks-list{
-
-                        .main__logged-task{
-
-                            .main__logged-task-checkbox{
-
-                            }
-                            .main__logged-task-text{
-
-                            }
-                            .main__logged-task-text.active{
-
-                            }
-                            .main__logged-task-date{
-
-                            }
-                            .main__logged-task-edit{
-                            }
-                            .main__logged-task-edit-accept{
-                            }
-                            .main__logged-task-delete{
-                            }
-                        }
-                    }
-                }
-            }
+@media (max-width: 900px) {
+  .main {
+    .main__logged-wrap {
+      .main__logged-nav {
+        .main__logged-form {
+          // padding-right: 20px;
+          .main__logged-add-task {
+          }
+          .main__logged-add-task-date {
+          }
+          .main__logged-search-task {
+          }
+          .main__logged-filter {
+          }
         }
-        .main__unlogged-wrap{}
+      }
+      .main__logged-nav:before {
+      }
+      .main__logged-tasks {
+        .main__logged-tasks-title {
+        }
+        .main__logged-tasks-wrap {
+          .main__logged-tasks-list {
+            padding: 0;
+            .main__logged-task {
+              .main__logged-task-checkbox {
+              }
+              .main__logged-task-text {
+              }
+              .main__logged-task-text.active {
+              }
+              .main__logged-task-date {
+              }
+              .main__logged-task-edit {
+              }
+              .main__logged-task-edit-accept {
+              }
+              .main__logged-task-delete {
+              }
+            }
+          }
+        }
+      }
     }
+    .main__unlogged-wrap {
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  .main {
+    max-height: calc(100% - #{$footerHeightLess700});
+    .main__logged-wrap {
+      @include flex-mother($flex-direction: column);
+      .main__logged-nav {
+        flex-basis: auto;
+        .main__logged-form {
+          @include flex-mother(
+            $flex-direction: row,
+            $align-items: center,
+            $justify-content: space-around,
+            $flex-wrap: wrap
+          );
+          height: auto;
+          padding: 0 8%;
+          .main__logged-add-task {
+            @include input($height: 30px, $width: 140px);
+            flex-basis: 34%;
+          }
+          .main__logged-add-task-date {
+            @include inputDate();
+          }
+          .main__logged-search-task {
+            @include input($height: 30px, $width: 140px);
+            flex-basis: 34%;
+          }
+          .main__logged-filter {
+            @include checkbox($size: 14px, $width: 150px, $margin-left: 8px);
+            flex-basis: 34%;
+          }
+        }
+      }
+      .main__logged-nav:before {
+        display: none;
+      }
+      .main__logged-tasks {
+        max-height: calc(100% - 120px);
+        max-width: calc(100%);
+        .main__logged-tasks-title {
+        }
+        .main__logged-tasks-wrap {
+          .main__logged-tasks-list {
+            padding: 0 20px 0 0;
+            .main__logged-task {
+              max-width: 100%;
+              .main__logged-task-checkbox {
+              }
+              .main__logged-task-text {
+              }
+              .main__logged-task-text.active {
+              }
+              .main__logged-task-date {
+              }
+              .main__logged-task-edit {
+              }
+              .main__logged-task-edit-accept {
+              }
+              .main__logged-task-delete {
+              }
+            }
+          }
+        }
+      }
+    }
+    .main__unlogged-wrap {
+    }
+  }
+}
+
+@media (max-height: 550px) and (max-width: 1024px) {
+  .main {
+    max-height: none;
+    .main__logged-wrap {
+      .main__logged-nav {
+        .main__logged-form {
+          .main__logged-add-task {
+          }
+          .main__logged-add-task-date {
+          }
+          .main__logged-search-task {
+          }
+          .main__logged-filter {
+          }
+        }
+      }
+      .main__logged-nav:before {
+      }
+      .main__logged-tasks {
+        max-height: auto;
+        .main__logged-tasks-title {
+        }
+        .main__logged-tasks-wrap {
+          overflow-y: visible;
+          .main__logged-tasks-list {
+            .main__logged-task {
+              .main__logged-task-checkbox {
+              }
+              .main__logged-task-text {
+              }
+              .main__logged-task-text.active {
+              }
+              .main__logged-task-date {
+              }
+              .main__logged-task-edit {
+              }
+              .main__logged-task-edit-accept {
+              }
+              .main__logged-task-delete {
+              }
+            }
+          }
+        }
+      }
+    }
+    .main__unlogged-wrap {
+    }
+  }
+}
+
+@media (max-width: 400px) {
+  .main {
+    .main__logged-wrap {
+      .main__logged-nav {
+        .main__logged-form {
+          @include flex-mother($flex-direction: column, $align-items: center);
+          .main__logged-add-task {
+            @include input($height: 26px, $width: 180px, $margin-top: 10px);
+          }
+          .main__logged-add-task-date {
+          }
+          .main__logged-search-task {
+            display: none;
+          }
+          .main__logged-filter {
+            @include checkbox(
+              $size: 14px,
+              $width: 150px,
+              $margin-left: 8px,
+              $margin-top: 20px
+            );
+          }
+        }
+      }
+      .main__logged-nav:before {
+      }
+      .main__logged-tasks {
+        padding: 20px 0 30px 0;
+        .main__logged-tasks-title {
+        }
+        .main__logged-tasks-wrap {
+          .main__logged-tasks-list {
+            .main__logged-task {
+              .main__logged-task-checkbox {
+              }
+              .main__logged-task-text {
+              }
+              .main__logged-task-text.active {
+              }
+              .main__logged-task-date {
+              }
+              .main__logged-task-edit {
+              }
+              .main__logged-task-edit-accept {
+              }
+              .main__logged-task-delete {
+              }
+            }
+          }
+        }
+      }
+    }
+    .main__unlogged-wrap {
+    }
+  }
 }

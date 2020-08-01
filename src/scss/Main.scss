@@ -1,37 +1,41 @@
-@import './Header';
-@import './MainPage';
-@import './Footer';
-@import './Variables';
-@import './Mixins';
+@import "./Header";
+@import "./MainPage";
+@import "./Footer";
+@import "./Variables";
+@import "./Mixins";
 
-
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-body{
-    position: relative;
-    margin:0;
-    background-color: #f2f2f2;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.App{
-    @include flex-mother($flex-direction: column);
-    max-width: 1024px;
-    margin: auto;
-    padding-top: calc(#{$headerHeight} + 20px);
-    height: 100vh;
+*:focus {
+  outline: none;
 }
 
-@media(max-width: 700px){
-    .App{
-        padding-top: calc(#{$headerHeightLess700} + 10px);
-    }
+body {
+  position: relative;
+  margin: 0;
+  background-color: #f2f2f2;
 }
 
-@media (max-width: 400px){
-    .App{
-        padding-top: calc(#{$headerHeightLess700Scroll} - 10px);
-    }
+.App {
+  @include flex-mother($flex-direction: column);
+  max-width: 1024px;
+  margin: auto;
+  padding-top: calc(#{$headerHeight} + 20px);
+  height: 100vh;
+}
+
+@media (max-width: 700px) {
+  .App {
+    padding-top: calc(#{$headerHeightLess700} + 10px);
+  }
+}
+
+@media (max-width: 400px) {
+  .App {
+    padding-top: calc(#{$headerHeightLess700Scroll} - 10px);
+  }
 }
