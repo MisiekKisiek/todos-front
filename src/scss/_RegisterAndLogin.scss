@@ -1,0 +1,12 @@
+@import "./Mixins";
+@import "./Variables";
+
+.register {
+  .register__wrap {
+    .register__form {
+      .register__form-login {
+        @include loginInput();
+      }
+    }
+  }
+}

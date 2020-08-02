@@ -1,262 +1,285 @@
-@mixin flex-mother($flex-direction: row, $justify-content: stretch, $align-items: stretch, $flex-wrap:nowrap){
-    display:flex;
-    flex-direction: $flex-direction;
-    justify-content: $justify-content;
-    align-items: $align-items;
-    flex-wrap: $flex-wrap;
+@mixin flex-mother(
+  $flex-direction: row,
+  $justify-content: stretch,
+  $align-items: stretch,
+  $flex-wrap: nowrap
+) {
+  display: flex;
+  flex-direction: $flex-direction;
+  justify-content: $justify-content;
+  align-items: $align-items;
+  flex-wrap: $flex-wrap;
 }
 
-@mixin input($height: 34px, $width: 180px,$margin-top: 20px){
+@mixin input($height: 34px, $width: 180px, $margin-top: 20px) {
+  position: relative;
+  margin-top: $margin-top;
+  border-radius: calc(#{$height} / 2);
+  label {
+    display: block;
     position: relative;
-    margin-top: $margin-top;
-    border-radius: calc(#{$height} / 2);
-    label{
-        display: block;
-        position: relative;
-        width: $width;
-        height: $height;
-        border-radius: calc(#{$height} / 2);
-        border: 1px solid rgba(0,0,0,0.8);
-        input{
-            position: absolute;
-            top:0;
-            left: 0;
-            height: $height;
-            width: 100%;
-            padding: 0 calc(#{$height} * 2 - 8px) 0 10px;
-            border: none;
-            font-size: calc((#{$height} - 9px) / 2);
-            background-color: transparent;
-        }
-        button{
-            position: absolute;
-            top:0px;
-            right: 0px;
-            width: calc(#{$height} - 2px);
-            height: calc(#{$height} - 2px);
-            line-height: calc(#{$height} - 8px);
-            padding: 1px;
-            border-radius: calc(#{$height} / 2);
-            border: none;
-            background-color: rgba(0,0,0,0.8);
-            color: #fff;
-            font-size: calc((#{$height} - 2px) / 2);
-            font-weight: bold;
-            transition: .3s;
-            cursor: pointer;
-        }
-        button:hover{
-            background-color: coral;
-        }
-        button.active{
-            background-color: coral;
-        }
-        span{
-            position: absolute;
-            top: calc(50% - 1px);
-            right: calc(#{$height} - 6px);
-            transform: translate(-50%, -50%);
-            display: none;
-            width: calc((#{$height} / 2));
-            height: calc((#{$height} / 2));
-            line-height: calc((#{$height} / 2));
-            border-radius: 50%;
-            text-align: center;
-            font-size: calc((#{$height} / 2) - 4px);
-            background-color: rgba(0,0,0,0.2);
-            color: rgba(0,0,0,0.4);
-            cursor: pointer;
-        }
-    }
-    label:hover button{
-        background-color: coral;
-    }
-    label:hover span{
-        display: block;
-    }
-}
-
-@mixin inputDate($height: 20px, $width: 120px){
-    position: relative;
-    margin-top: 40px;
-    label{
-        display: block;
-        position: relative;
-        width: $width;
-        height: $height;
-        border-radius: calc(#{$height} / 2);
-        border: 1px solid rgba(0,0,0,0.8);
-        input{
-            position: absolute;
-            top:0;
-            left: 0;
-            height: $height;
-            padding: 0 $height 0 10px;
-            border: none;
-
-            font-size: calc((#{$height} + 4px) / 2);
-            background-color: transparent;
-        }
-        p{
-            position: absolute;
-            top:-20px;
-            left: 50%;
-            transform: translate(-50%,0);
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 12px;
-        }
-    }
-    
-}
-
-@mixin checkbox($size:18px, $width: 180px, $margin-left: calc(#{$size} + 2px), $margin-top: 30px){
     width: $width;
-    min-height: calc(#{$size} +4px);
-    margin-top: $margin-top;
-    label {
-        display: block;
-        position: relative;
-        height: $size;
-        padding-left: 0px;
-        margin-left: $margin-left;
-        font-size: calc(#{$size} + 4px);
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        input {
-            z-index: 999;
-            position: absolute;
-            top:1px;
-            left:1px;
-            opacity: 0;
-            height: $size;
-            width: $size;
-            cursor: pointer;
-        }
-        span {
-            box-sizing: content-box;
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: $size;
-            width: $size;
-            border-radius: 5px;
-            border: 1px solid black;
-            cursor: pointer;
-        }
-         input ~ span{
-            background-color: #fff;
-        }
-         input:checked ~ span{
-            background-color: rgba(0, 0, 0, 0.8);
-        }
-        span:after {
-            content: "";
-            position: absolute;
-            display: none;
-        }
-        input:checked ~ span:after {
-            display: block;
-        }
-        span:after {
-            left: calc((#{$size} - 3px)/3 );
-            top: 1px;
-            width: calc((#{$size} - 3px)/3 );
-            height: calc(#{$size} / 2 );
-            border: solid white;
-            border-width: 0 3px 3px 0;
-            -webkit-transform: rotate(45deg);
-            -ms-transform: rotate(45deg);
-            transform: rotate(45deg);
-        }
-        p{
-            display: block;
-            padding-left: 26px;
-            padding-top: 1px;
-            font-size: calc(#{$size} - 3px);
-            font-family: Arial, Helvetica, sans-serif;
-        }
+    height: $height;
+    border-radius: calc(#{$height} / 2);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    input {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: $height;
+      width: 100%;
+      padding: 0 calc(#{$height} * 2 - 8px) 0 10px;
+      border: none;
+      font-size: calc((#{$height} - 9px) / 2);
+      background-color: transparent;
     }
+    button {
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      width: calc(#{$height} - 2px);
+      height: calc(#{$height} - 2px);
+      line-height: calc(#{$height} - 9px);
+      padding: 1px;
+      border-radius: calc(#{$height} / 2);
+      border: none;
+      background-color: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      font-size: calc((#{$height} - 2px) / 2);
+      font-weight: bold;
+      text-align: center;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: coral;
+    }
+    button.active {
+      background-color: coral;
+    }
+    span {
+      position: absolute;
+      top: calc(50% - 1px);
+      right: calc(#{$height} - 6px);
+      transform: translate(-50%, -50%);
+      display: none;
+      width: calc((#{$height} / 2));
+      height: calc((#{$height} / 2));
+      line-height: calc((#{$height} / 2));
+      border-radius: 50%;
+      text-align: center;
+      font-size: calc((#{$height} / 2) - 4px);
+      background-color: rgba(0, 0, 0, 0.2);
+      color: rgba(0, 0, 0, 0.4);
+      cursor: pointer;
+    }
+  }
+  label:hover button {
+    background-color: coral;
+  }
+  label:hover span {
+    display: block;
+  }
 }
 
-@mixin radio($height: 25px, $width: 25px){
-    label {
-        display: block;
-        position: relative;
-        height: 100%;
-        width: 100%;
-        font-size: 22px;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        input {
-            z-index: 998;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%,-50%);
-            height: $height;
-            width: $width;
-            opacity: 0;
-            cursor: pointer;
-        }
-        span {
-            // box-sizing: content-box;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%,-50%);
-            height: $height;
-            width: $width;
-            border: 1px solid black;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-        &:hover input ~ span {
-            background-color: #fff;
-        }
-        input:checked ~ span {
-            background-color: rgba(0, 0, 0, 0.8);
-        }
-        span:after {
-            content: "";
-            position: absolute;
-            display: none;
-        }
-        input:checked ~ span:after {
-            display: block;
-        }
-        span:after {
-            top: calc((#{$height} - 2px) / 2);
-            left: calc((#{$width}  - 2px) / 2);
-            transform: translate(-50%,-50%);
-            width: calc(#{$width} / 2.5);
-            height: calc(#{$height} / 2.5);
-            border-radius: 50%;
-            background: white;
-        }
+@mixin inputDate($height: 20px, $width: 120px) {
+  position: relative;
+  margin-top: 40px;
+  label {
+    display: block;
+    position: relative;
+    width: $width;
+    height: $height;
+    border-radius: calc(#{$height} / 2);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    input {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: $height;
+      padding: 0 $height 0 10px;
+      border: none;
+
+      font-size: calc((#{$height} + 4px) / 2);
+      background-color: transparent;
     }
+    p {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translate(-50%, 0);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 12px;
+    }
+  }
 }
 
-@mixin taskButton($size: 24px,$top: 60%, $right: -12px, $background-color: coral){
-        display: none;
-        position: absolute;
-        top: $top;
-        right: $right;
-        width: $size;
-        height: $size;
-        transform: translate(-50%,-50%);
-        border: 0;
-        border-radius: 50%;
-        background-color: rgba(0,0,0,0.8);
-        color: #fff;
-        font-size: calc((#{$size} / 2) - 1px);
-        cursor: pointer;
-        transition: .2s;
-    &:hover{
-        background-color: $background-color;
+@mixin checkbox(
+  $size: 18px,
+  $width: 180px,
+  $margin-left: calc(#{$size} + 2px),
+  $margin-top: 30px
+) {
+  width: $width;
+  min-height: calc(#{$size} +4px);
+  margin-top: $margin-top;
+  label {
+    display: block;
+    position: relative;
+    height: $size;
+    padding-left: 0px;
+    margin-left: $margin-left;
+    font-size: calc(#{$size} + 4px);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    input {
+      z-index: 999;
+      position: absolute;
+      top: 1px;
+      left: 1px;
+      opacity: 0;
+      height: $size;
+      width: $size;
+      cursor: pointer;
     }
+    span {
+      box-sizing: content-box;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: $size;
+      width: $size;
+      border-radius: 5px;
+      border: 1px solid black;
+      cursor: pointer;
+    }
+    input ~ span {
+      background-color: #fff;
+    }
+    input:checked ~ span {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+    span:after {
+      content: "";
+      position: absolute;
+      display: none;
+    }
+    input:checked ~ span:after {
+      display: block;
+    }
+    span:after {
+      left: calc((#{$size} - 3px) / 3);
+      top: 1px;
+      width: calc((#{$size} - 3px) / 3);
+      height: calc(#{$size} / 2);
+      border: solid white;
+      border-width: 0 3px 3px 0;
+      -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
+    }
+    p {
+      display: block;
+      padding-left: 26px;
+      padding-top: 1px;
+      font-size: calc(#{$size} - 3px);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+  }
+}
 
+@mixin radio($height: 25px, $width: 25px) {
+  label {
+    display: block;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    input {
+      z-index: 998;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      height: $height;
+      width: $width;
+      opacity: 0;
+      cursor: pointer;
+    }
+    span {
+      // box-sizing: content-box;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      height: $height;
+      width: $width;
+      border: 1px solid black;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    &:hover input ~ span {
+      background-color: #fff;
+    }
+    input:checked ~ span {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+    span:after {
+      content: "";
+      position: absolute;
+      display: none;
+    }
+    input:checked ~ span:after {
+      display: block;
+    }
+    span:after {
+      top: calc((#{$height} - 2px) / 2);
+      left: calc((#{$width} - 2px) / 2);
+      transform: translate(-50%, -50%);
+      width: calc(#{$width} / 2.5);
+      height: calc(#{$height} / 2.5);
+      border-radius: 50%;
+      background: white;
+    }
+  }
+}
+
+@mixin taskButton(
+  $size: 24px,
+  $top: 60%,
+  $right: -12px,
+  $background-color: coral
+) {
+  display: none;
+  position: absolute;
+  top: $top;
+  right: $right;
+  width: $size;
+  height: $size;
+  transform: translate(-50%, -50%);
+  border: 0;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  font-size: calc((#{$size} / 2) - 1px);
+  cursor: pointer;
+  transition: 0.2s;
+  &:hover {
+    background-color: $background-color;
+  }
+}
+
+@mixin loginInput() {
+  label {
+  }
+  input {
+    border: none;
+    background-color: transparent;
+  }
 }
