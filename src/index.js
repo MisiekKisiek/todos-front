@@ -1,8 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { HashRouter as Router } from "react-router-dom";
-// import { browserHistory } from "react-router";
-import { syncHistoryWithStore, routerReducer } from "react-router-redux";
 
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";

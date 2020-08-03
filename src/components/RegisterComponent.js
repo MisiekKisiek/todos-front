@@ -1,9 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
-const RegisterComponent = () => {
+const RegisterComponent = (props) => {
+  const { handleLabelStyle } = props;
+
   const [loginInput, setloginInput] = useState("");
   const [emailInput, setemailInput] = useState("");
   const [passwordInput, setpasswordInput] = useState("");
+
+  const loginLabelElement = useRef(null);
+  const loginInputElement = useRef(null);
+  const emailLabelElement = useRef(null);
+  const emailInputElement = useRef(null);
+  const passwordLabelElement = useRef(null);
+  const passwordInputElement = useRef(null);
 
   const handleInputs = (e) => {
     switch (e.target.name) {
@@ -44,64 +53,56 @@ const RegisterComponent = () => {
         alert(err);
       });
   };
-  const test = (e) => {
-    e.preventDefault();
-    fetch("http://localhost:9000/test", {
-      method: "POST",
-      mode: "cors",
-      body: JSON.stringify({
-        login: loginInput,
-        email: emailInput,
-        password: passwordInput,
-      }),
-    })
-      .then((e) => e.json())
-      .then((e) => console.log(e));
-  };
 
   return (
     <>
       <div className="register">
         <div className="register__wrap">
+          <h1 className="register__title">Join and optimalize your work!</h1>
           <form action="register" className="register__form">
             <div className="register__form-login">
-              <label htmlFor="login">Login</label>
               <input
                 name="login"
                 type="text"
+                ref={loginInputElement}
                 value={loginInput}
                 onChange={(e) => {
+                  handleLabelStyle([[loginInputElement, loginLabelElement]]);
                   handleInputs(e);
                 }}
               />
+              <label htmlFor="login" ref={loginLabelElement}>Login</label>
             </div>
             <div className="register__form-email">
-              <label htmlFor="email">Email</label>
               <input
                 name="email"
                 type="email"
+                ref={emailInputElement}
                 value={emailInput}
                 onChange={(e) => {
+                  handleLabelStyle([[emailInputElement, emailLabelElement]]);
                   handleInputs(e);
                 }}
               />
+              <label htmlFor="email" ref={emailLabelElement}>Email</label>
             </div>
             <div className="register__form-password">
-              <label htmlFor="password">Password</label>
               <input
                 name="password"
                 type="password"
+                ref={passwordInputElement}
                 value={passwordInput}
                 onChange={(e) => {
+                  handleLabelStyle([[passwordInputElement, passwordLabelElement]]);
                   handleInputs(e);
                 }}
               />
+              <label htmlFor="password" ref={passwordLabelElement}>Password</label>
             </div>
             <button
               type="submit"
               onClick={(e) => {
                 registerFormSubmit(e);
-                // test(e);
               }}
             >
               Register!

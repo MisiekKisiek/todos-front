@@ -31,10 +31,10 @@
             .header__title{
                 align-self: center;
                 padding: 0;
-                padding-left: 20px;
+                padding-left: 10px;
                 margin: 0;
-                font-family: Arial, Helvetica, sans-serif;
-                font-weight: 500;
+                font-family: Georgia, 'Times New Roman', Times, serif;
+                font-weight: 900;
             }
         }
         .header__user-list{
@@ -46,6 +46,10 @@
             margin: 0 20px;
             list-style-type: none;
             font-family: Arial, Helvetica, sans-serif;
+            .header__user-item-main-page{
+                display: none;
+                color: #1f133a;
+            }
             .header__user-item-login{
                 padding: 0 8px;
                 color: #1f133a;
@@ -59,6 +63,13 @@
                 cursor: pointer;
                 color: coral;
             }
+            *{
+                a{
+                    color: rgba(0,0,0,0.8);
+                    text-decoration: none;
+                    transition: .1s;
+                }
+            }
         }
         .header__user-list:before{
             position: absolute;
@@ -71,7 +82,17 @@
             background-color: #ddd;
         }
         .header__logged-search-task{
+            @include input($height: 26px, $width: 155px);
             display: none;
+            margin-top: calc((#{$headerHeightLess700Scroll} - 26px - 30px) / 2);
+            // margin-right: 15px;
+        }
+        .header__logged-user-icon{
+            @include flex-mother($align-items:center, $justify-content:center);
+            display:none;
+            min-width: 40px;
+            color: rgba(0,0,0,0.8);
+            cursor: pointer;
         }
     }
 }
@@ -127,12 +148,13 @@
         z-index: 999;
         height: calc(#{$headerHeightLess700Scroll} - 30px);
         .header__wrap{
+            position: relative;
             .header__logo{
                 .header__image{
-                    height: $logoHeightLess700Scroll;
+                    height: calc(#{$logoHeightLess700Scroll} + 10px);
                     padding: 5px;
                     img{
-                        height: calc(#{$logoHeightLess700Scroll} - 20px);
+                        height: calc(#{$logoHeightLess700Scroll});
                     }
                 }
                 .header__title{
@@ -140,21 +162,45 @@
                 }
             }
             .header__user-list{
+                @include flex-mother($flex-direction:column, $align-items:center, $justify-content:space-around);
                 display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                height: calc(#{$loginHeight} + 40px);
+                width: 100%;
+                background-color: #fff;
+                border-top: 1px solid rgba(0,0,0,0.8);
+                border-bottom: 1px solid rgba(0,0,0,0.8);
+                .header__user-item-main-page{
+                    display: block;
+                }
                 .header__user-item-login{
                 }
                 .header__user-item-register{
+                    font-weight: normal;
+                }
+                *{
+                    width: 100px;
+                    text-align: center;
+                    a{
+                        display: block;
+                        width: 100%;
+                    }
                 }
                 *:hover{
                 }
+            }
+            .header__user-list.active{
+                display: flex;
             }
             .header__user-list:before{
             }
             .header__logged-search-task{
                 display: block;
-                @include input($height: 26px, $width: 180px);
-                margin-top: calc((#{$headerHeightLess700Scroll} - 26px - 30px) / 2);
-                margin-right: 15px;
+            }
+            .header__logged-user-icon{
+                display:flex;
             }
         }
     }

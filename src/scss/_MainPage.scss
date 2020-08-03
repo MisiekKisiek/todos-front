@@ -189,7 +189,10 @@
                 display: none;
               }
               input {
+                position: relative;
+                height: 13px;
                 display: block;
+                font-size: 9px;
               }
             }
             .main__logged-task-edit {

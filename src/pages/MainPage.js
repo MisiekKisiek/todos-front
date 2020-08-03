@@ -7,6 +7,15 @@ import RegisterComponent from "../components/RegisterComponent";
 
 class MainPage extends Component {
   state = {};
+
+  handleLabelStyle = (tab) => {
+    tab.forEach(e => {
+      if (e[0].current.value !== "") {
+        e[1].current.classList.add("active")
+      } else { e[1].current.classList.remove("active") }
+    })
+  }
+
   render() {
     return (
       <>
@@ -16,10 +25,10 @@ class MainPage extends Component {
               <Logged></Logged>
             </Route>
             <Route path="/LogIn">
-              <LoginComponent></LoginComponent>
+              <LoginComponent handleLabelStyle={this.handleLabelStyle}></LoginComponent>
             </Route>
             <Route path="/Register">
-              <RegisterComponent></RegisterComponent>
+              <RegisterComponent handleLabelStyle={this.handleLabelStyle}></RegisterComponent>
             </Route>
             <Redirect to="/"></Redirect>
           </Switch>

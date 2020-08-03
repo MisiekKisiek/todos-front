@@ -5,14 +5,11 @@ import { searchTask } from "../actions";
 import { connect } from "react-redux";
 
 const Header = (props) => {
-  // const smallHeaderScroll = () => {
-  //     const header = document.querySelector('.header');
-  //     if (window.pageYOffset > 1) {
-  //         header.classList.add('active')
-  //     } else if (window.pageYOffset > 1) {
-  //         header.classList.remove('active')
-  //     }
-  // }
+
+  const showMenu = (param) => {
+    const menu = document.querySelector('.header__user-list');
+    param === "remove" ? menu.classList.remove('active') : menu.classList.toggle('active')
+  }
 
   return (
     <>
@@ -27,13 +24,14 @@ const Header = (props) => {
             <h2 className="header__title">toDos App</h2>
           </div>
           <ul className="header__user-list">
+            <li className="header__user-item-main-page">
+              <NavLink to="/" onClick={() => { showMenu('remove') }}>Main page</NavLink>
+            </li>
             <li className="header__user-item-login">
-              {/* Log In */}
-              <NavLink to="/LogIn">Log in</NavLink>
+              <NavLink to="/LogIn" onClick={() => { showMenu('remove') }}>Log in</NavLink>
             </li>
             <li className="header__user-item-register">
-              {/* Register */}
-              <NavLink to="/Register">Register</NavLink>
+              <NavLink to="/Register" onClick={() => { showMenu('remove') }}>Register</NavLink>
             </li>
           </ul>
           <div className="header__logged-search-task">
@@ -52,6 +50,9 @@ const Header = (props) => {
                 <i className="fas fa-times"></i>
               </span>
             </label>
+          </div>
+          <div className="header__logged-user-icon" onClick={showMenu}>
+            <i class="fas fa-user-circle"></i>
           </div>
         </div>
       </header>
