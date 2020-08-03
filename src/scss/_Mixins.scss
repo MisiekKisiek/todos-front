@@ -275,21 +275,22 @@
   }
 }
 
-@mixin login-input($height:20px, $width:180px) {
+@mixin login-input($height: 20px, $width: 180px) {
   position: relative;
   margin-top: 30px;
   label {
     position: absolute;
-    top:3px;
-    left:2px;
+    top: 3px;
+    left: 2px;
     font-size: 12px;
     font-family: Arial, Helvetica, sans-serif;
-    color: rgba(0,0,0,0.2);
-    transition: .1s;
+    color: rgba(0, 0, 0, 0.2);
+    transition: 0.1s;
   }
-  label.active,  input:focus+label{
+  label.active,
+  input:focus + label {
     top: calc(#{$height} / 2 - 20px);
-    left:0;
+    left: 0;
     font-size: calc(#{$height} / 2);
     color: coral;
   }
@@ -299,18 +300,19 @@
     line-height: $height;
     width: $width;
     border: none;
-    border-bottom: 1px solid rgba(0,0,0,0.2);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     background-color: transparent;
+    transition: 0.3s;
   }
-  input:hover{
+  input:hover {
     border-color: rgb(228, 68, 10);
   }
-  input:focus{
+  input:focus {
     border-color: rgb(255, 130, 85);
   }
 }
 
-@mixin login-button($height: 34px, $width: 100px){
+@mixin login-button($height: 34px, $width: 100px) {
   width: $width;
   height: $height;
   margin-top: 40px;
@@ -319,10 +321,32 @@
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   color: white;
-  background-color: rgba(0,0,0,0.8);
-  transition: .3s; 
+  background-color: rgba(0, 0, 0, 0.8);
+  transition: 0.3s;
   cursor: pointer;
-  &:hover{
+  &:hover {
     background-color: coral;
+  }
+}
+
+@mixin main-page-link() {
+  position: absolute;
+  top: 0;
+  left: 0;
+  a {
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.2);
+    font-family: Georgia, "Times New Roman", Times, serif;
+    font-size: 12px;
+    i,
+    span {
+      transition: 0.4s;
+    }
+  }
+  &:hover a {
+    i,
+    span {
+      color: coral;
+    }
   }
 }

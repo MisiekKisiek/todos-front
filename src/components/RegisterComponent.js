@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { NavLink } from "react-router-dom";
 
 const RegisterComponent = (props) => {
   const { handleLabelStyle } = props;
@@ -58,6 +59,12 @@ const RegisterComponent = (props) => {
     <>
       <div className="register">
         <div className="register__wrap">
+          <nav className="register__main-page-nav">
+            <NavLink to="/">
+              <i class="fas fa-arrow-left"></i> Go back to{" "}
+              <span>Main Page</span>
+            </NavLink>
+          </nav>
           <h1 className="register__title">Join and optimalize your work!</h1>
           <form action="register" className="register__form">
             <div className="register__form-login">
@@ -71,7 +78,9 @@ const RegisterComponent = (props) => {
                   handleInputs(e);
                 }}
               />
-              <label htmlFor="login" ref={loginLabelElement}>Login</label>
+              <label htmlFor="login" ref={loginLabelElement}>
+                Login
+              </label>
             </div>
             <div className="register__form-email">
               <input
@@ -84,7 +93,9 @@ const RegisterComponent = (props) => {
                   handleInputs(e);
                 }}
               />
-              <label htmlFor="email" ref={emailLabelElement}>Email</label>
+              <label htmlFor="email" ref={emailLabelElement}>
+                Email
+              </label>
             </div>
             <div className="register__form-password">
               <input
@@ -93,11 +104,15 @@ const RegisterComponent = (props) => {
                 ref={passwordInputElement}
                 value={passwordInput}
                 onChange={(e) => {
-                  handleLabelStyle([[passwordInputElement, passwordLabelElement]]);
+                  handleLabelStyle([
+                    [passwordInputElement, passwordLabelElement],
+                  ]);
                   handleInputs(e);
                 }}
               />
-              <label htmlFor="password" ref={passwordLabelElement}>Password</label>
+              <label htmlFor="password" ref={passwordLabelElement}>
+                Password
+              </label>
             </div>
             <button
               type="submit"

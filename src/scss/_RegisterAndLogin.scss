@@ -4,14 +4,22 @@
 .register {
   height: 100%;
   .register__wrap {
-    @include flex-mother($flex-direction:column, $align-items: center, $justify-content: center);
+    @include flex-mother(
+      $flex-direction: column,
+      $align-items: center,
+      $justify-content: center
+    );
+    position: relative;
     padding-top: 90px;
-    .register__title{
-      margin-bottom: 70px;
+    .register__main-page-nav {
+      @include main-page-link();
+    }
+    .register__title {
+      margin-bottom: 40px;
       text-align: center;
-      color:#222;
+      color: #222;
       font-size: 30px;
-      font-family: Georgia, 'Times New Roman', Times, serif;
+      font-family: Georgia, "Times New Roman", Times, serif;
     }
     .register__form {
       @include flex-mother($flex-direction: column, $align-items: center);
@@ -24,45 +32,53 @@
       .register__form-password {
         @include login-input();
       }
-      button{
-        @include login-button()
+      button {
+        @include login-button();
       }
     }
   }
 }
 
-.login{
+.login {
   height: 100%;
-  .login__wrap{
+  .login__wrap {
+    @include flex-mother(
+      $flex-direction: column,
+      $align-items: center,
+      $justify-content: center
+    );
+    position: relative;
     padding-top: 90px;
-    @include flex-mother($flex-direction:column, $align-items: center, $justify-content: center);
-    .login__title{
-      margin-bottom: 70px;
-      text-align: center;
-      color:#222;
-      font-size: 30px;
-      font-family: Georgia, 'Times New Roman', Times, serif;
+    .login__main-page-nav {
+      @include main-page-link();
     }
-    .login__form{
+    .login__title {
+      margin-bottom: 40px;
+      text-align: center;
+      color: #222;
+      font-size: 30px;
+      font-family: Georgia, "Times New Roman", Times, serif;
+    }
+    .login__form {
       @include flex-mother($flex-direction: column, $align-items: center);
-      .login__form-login{
+      .login__form-login {
         @include login-input();
       }
-      .login__form-password{
+      .login__form-password {
         @include login-input();
       }
-      button{
-        @include login-button()
+      button {
+        @include login-button();
       }
     }
   }
 }
 
-@media(max-width: 700px){
+@media (max-width: 700px) {
   .register {
     height: 100%;
     .register__wrap {
-      .register__title{
+      .register__title {
         margin-bottom: 20px;
         padding: 0 20px;
         font-size: 26px;
@@ -78,33 +94,37 @@
         .register__form-password {
           @include login-input();
         }
-        button{
-          @include login-button()
+        button {
+          @include login-button();
         }
       }
     }
   }
-  
-  .login{
+
+  .login {
     height: 100%;
-    .login__wrap{
+    .login__wrap {
       padding-top: 90px;
-      @include flex-mother($flex-direction:column, $align-items: center, $justify-content: center);
-      .login__title{
+      @include flex-mother(
+        $flex-direction: column,
+        $align-items: center,
+        $justify-content: center
+      );
+      .login__title {
         margin-bottom: 20px;
         padding: 0 20px;
         font-size: 26px;
       }
-      .login__form{
+      .login__form {
         @include flex-mother($flex-direction: column, $align-items: center);
-        .login__form-login{
+        .login__form-login {
           @include login-input();
         }
-        .login__form-password{
+        .login__form-password {
           @include login-input();
         }
-        button{
-          @include login-button()
+        button {
+          @include login-button();
         }
       }
     }

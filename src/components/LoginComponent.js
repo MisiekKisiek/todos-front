@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { NavLink } from "react-router-dom";
 
 const LoginComponent = (props) => {
   const { handleLabelStyle } = props;
@@ -50,25 +51,54 @@ const LoginComponent = (props) => {
     <>
       <div className="login">
         <div className="login__wrap">
+          <nav className="login__main-page-nav">
+            <NavLink to="/">
+              <i class="fas fa-arrow-left"></i> Go back to{" "}
+              <span>Main Page</span>
+            </NavLink>
+          </nav>
           <h1 className="login__title">Login and organize!</h1>
           <form action="login" className="login__form">
             <div className="login__form-login">
-              <input type="text" name="login" ref={loginInputElement} value={loginInput} onChange={(e) => {
-                handleLabelStyle([[loginInputElement, loginLabelElement]]);
-                handleInputs(e)
-              }} />
-              <label htmlFor="login" ref={loginLabelElement}>Login</label>
+              <input
+                type="text"
+                name="login"
+                ref={loginInputElement}
+                value={loginInput}
+                onChange={(e) => {
+                  handleLabelStyle([[loginInputElement, loginLabelElement]]);
+                  handleInputs(e);
+                }}
+              />
+              <label htmlFor="login" ref={loginLabelElement}>
+                Login
+              </label>
             </div>
             <div className="login__form-password">
-              <input type="password" name="password" ref={passwordInputElement} value={passwordInput} onChange={(e) => {
-                handleLabelStyle([[passwordInputElement, passwordLabelElement]]);
-                handleInputs(e)
-              }} />
-              <label htmlFor="password" ref={passwordLabelElement}>Password</label>
+              <input
+                type="password"
+                name="password"
+                ref={passwordInputElement}
+                value={passwordInput}
+                onChange={(e) => {
+                  handleLabelStyle([
+                    [passwordInputElement, passwordLabelElement],
+                  ]);
+                  handleInputs(e);
+                }}
+              />
+              <label htmlFor="password" ref={passwordLabelElement}>
+                Password
+              </label>
             </div>
-            <button type="submit" onClick={(e) => {
-              registerFormSubmit(e)
-            }}>Log in!</button>
+            <button
+              type="submit"
+              onClick={(e) => {
+                registerFormSubmit(e);
+              }}
+            >
+              Log in!
+            </button>
           </form>
         </div>
       </div>
