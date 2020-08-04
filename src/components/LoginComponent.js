@@ -36,11 +36,15 @@ const LoginComponent = (props) => {
         password: passwordInput,
       }),
     })
-      .then((e) => e.json())
+      .then((e) => { if (e.status === 200) { return e.json() } else { alert('Coś poszło nie tak.') } })
       .then((e) => {
-        alert(e);
         setloginInput("");
         setpasswordInput("");
+        handleLabelStyle([[loginInputElement, loginLabelElement], [passwordInputElement, passwordLabelElement]]);
+        localStorage.setItem('token', e.token);
+        localStorage.setItem('logged', true)
+        // window.location.href = "/"
+        alert('Zostałeś zalogowany.')
       })
       .catch((err) => {
         alert(err);
@@ -53,7 +57,7 @@ const LoginComponent = (props) => {
         <div className="login__wrap">
           <nav className="login__main-page-nav">
             <NavLink to="/">
-              <i class="fas fa-arrow-left"></i> Go back to{" "}
+              <i className="fas fa-arrow-left"></i> Go back to{" "}
               <span>Main Page</span>
             </NavLink>
           </nav>

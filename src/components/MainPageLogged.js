@@ -11,13 +11,10 @@ const MainPageLogged = (props) => {
 
     const [writeTask, setwriteTask] = useState("");
     const [writeSearchTask, setwriteSearchTask] = useState("");
-    const [taskDate, settaskDate] = useState("");
 
     const handleInputs = (e) => {
         if (e.target.name === "add-task") {
             setwriteTask(e.target.value)
-        } else if (e.target.name === "add-task-date") {
-            settaskDate(e.target.value)
         } else if (e.target.name === "search-task") {
             setwriteSearchTask(e.target.value)
         } else if (e.target.name === "filter-done") {
@@ -31,7 +28,6 @@ const MainPageLogged = (props) => {
         e.preventDefault();
         props.addTask(writeTask, uuid(), "Add deadline");
         setwriteTask("");
-        settaskDate("");
     }
 
     const searchTaskElement = (e) => {
@@ -73,12 +69,6 @@ const MainPageLogged = (props) => {
         <div className="main__logged-wrap">
             <nav className="main__logged-nav">
                 <div action="" className="main__logged-form">
-                    {/* <form className="main__logged-add-task-date">
-                        <label htmlFor="add-task-date">
-                            <p>Deadline</p>
-                            <input type="date" name="add-task-date" value={taskDate} onChange={(e) => { handleInputs(e) }} />
-                        </label>
-                    </form> */}
                     <form className="main__logged-add-task">
                         <label htmlFor="add-task">
                             <input type="text" name="add-task" placeholder="Add task..." value={writeTask} onChange={(e) => { handleInputs(e) }} />

@@ -52,7 +52,7 @@ const Header = (props) => {
             </label>
           </div>
           <div className="header__logged-user-icon" onClick={showMenu}>
-            <i class="fas fa-user-circle"></i>
+            <i className="fas fa-user-circle"></i>
           </div>
         </div>
       </header>

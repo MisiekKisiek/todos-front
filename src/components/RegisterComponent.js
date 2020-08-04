@@ -49,6 +49,7 @@ const RegisterComponent = (props) => {
         setloginInput("");
         setemailInput("");
         setpasswordInput("");
+        handleLabelStyle([[loginInputElement, loginLabelElement], [emailInputElement, emailLabelElement], [passwordInputElement, passwordLabelElement]]);
       })
       .catch((err) => {
         alert(err);
@@ -61,7 +62,7 @@ const RegisterComponent = (props) => {
         <div className="register__wrap">
           <nav className="register__main-page-nav">
             <NavLink to="/">
-              <i class="fas fa-arrow-left"></i> Go back to{" "}
+              <i className="fas fa-arrow-left"></i> Go back to{" "}
               <span>Main Page</span>
             </NavLink>
           </nav>
@@ -105,7 +106,7 @@ const RegisterComponent = (props) => {
                 value={passwordInput}
                 onChange={(e) => {
                   handleLabelStyle([
-                    [passwordInputElement, passwordLabelElement],
+                    [passwordInputElement, passwordLabelElement]
                   ]);
                   handleInputs(e);
                 }}
