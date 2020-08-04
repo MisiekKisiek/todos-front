@@ -36,19 +36,46 @@ const LoginComponent = (props) => {
         password: passwordInput,
       }),
     })
-      .then((e) => { if (e.status === 200) { return e.json() } else { alert('Coś poszło nie tak.') } })
+      .then((e) => {
+        if (e.status === 200) {
+          return e.json();
+        } else {
+          alert("Coś poszło nie tak.");
+        }
+      })
       .then((e) => {
         setloginInput("");
         setpasswordInput("");
-        handleLabelStyle([[loginInputElement, loginLabelElement], [passwordInputElement, passwordLabelElement]]);
-        localStorage.setItem('token', e.token);
-        localStorage.setItem('logged', true)
+        handleLabelStyle([
+          [loginInputElement, loginLabelElement],
+          [passwordInputElement, passwordLabelElement],
+        ]);
+        localStorage.setItem("token", e.token);
+        localStorage.setItem("logged", true);
         // window.location.href = "/"
-        alert('Zostałeś zalogowany.')
+        alert("Zostałeś zalogowany.");
       })
       .catch((err) => {
         alert(err);
       });
+  };
+
+  const test = (e) => {
+    e.preventDefault();
+    fetch("http://localhost:9000/tasks/addTask", {
+      method: "POST",
+      headers: {
+        Authorization: `bearer ${localStorage.getItem("token")}`,
+        "Content-type": "application/json",
+      },
+      mode: "cors",
+      body: JSON.stringify({
+        task: "dupsko",
+      }),
+    })
+      .then((e) => e.json())
+      .then((e) => console.log(e))
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -67,6 +94,7 @@ const LoginComponent = (props) => {
               <input
                 type="text"
                 name="login"
+                autoComplete="off"
                 ref={loginInputElement}
                 value={loginInput}
                 onChange={(e) => {
@@ -82,6 +110,7 @@ const LoginComponent = (props) => {
               <input
                 type="password"
                 name="password"
+                autoComplete="off"
                 ref={passwordInputElement}
                 value={passwordInput}
                 onChange={(e) => {
@@ -102,6 +131,13 @@ const LoginComponent = (props) => {
               }}
             >
               Log in!
+            </button>
+            <button
+              onClick={(e) => {
+                test(e);
+              }}
+            >
+              test
             </button>
           </form>
         </div>
