@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import { changeStatus, removeTask, changeTask, changeDate } from '../actions/index';
 
 const TaskElement = (props) => {
-    const { checked, task, id, date } = props.element
+    const { checked, task, _id, deadline } = props.element
     const [check, setcheck] = useState(checked);
 
     const [writeTask, setwriteTask] = useState(task);
-    const [writeDate, setwriteDate] = useState(date);
+    const [writeDate, setwriteDate] = useState(deadline);
 
     const [forceUpdate, setforceUpdate] = useState(1);
 
@@ -16,29 +16,15 @@ const TaskElement = (props) => {
         taskItem.classList.toggle('main__logged-task--edit')
     }
 
-    const editTaskAndDate = (e, id) => {
-        if (e.target.attributes.dataname.value === "accept") {
-            props.changeTask(writeTask, id);
-            props.changeDate(writeDate, id);
-            setforceUpdate(forceUpdate + 1)
-        }
-        else if (e.target.attributes.dataname.value === "discard") {
-            setwriteTask(task)
-            setwriteDate(date)
-        }
-        // setwriteTask(task);
-        // setwriteDate(date);
-    }
-
     return (<>
         <li className="main__logged-task">
             <div className="main__logged-task-checkbox">
-                <label htmlFor={`task ${id}`}>
-                    <input type="checkbox" name={`task ${id}`} value={checked} defaultChecked={checked}
+                <label htmlFor={`task ${_id}`}>
+                    <input type="checkbox" name={`task ${_id}`} value={checked} defaultChecked={checked}
                         onChange={
                             () => {
-                                props.changeStatus(id);
-                                setcheck(!check)
+                                const changedTask = { taskID: _id, task: writeTask, deadline: writeDate, checked: !check }
+                                props.editTask({ changedTask });
                             }} />
                     <span></span>
                 </label>
@@ -52,7 +38,7 @@ const TaskElement = (props) => {
                         }} />
             </div>
             <div className="main__logged-task-date">
-                <span>{date}</span>
+                <span>{deadline}</span>
                 <input type="date" value={writeDate}
                     onChange={
                         (e) => {
@@ -69,7 +55,9 @@ const TaskElement = (props) => {
                 onClick={
                     (e) => {
                         addActiveClassToTask(e);
-                        editTaskAndDate(e, id)
+                        const changedTask = { taskID: _id, task: writeTask, deadline: writeDate, checked: check };
+                        console.log(changedTask)
+                        props.editTask({ changedTask });
                     }}>
                 <i className="fas fa-check" dataname="accept"></i>
             </button>
@@ -77,17 +65,16 @@ const TaskElement = (props) => {
                 onClick={
                     (e) => {
                         addActiveClassToTask(e);
-                        editTaskAndDate(e, id)
                     }}>
                 <i className="fas fa-times" dataname="discard"></i>
             </button>
-            <button className="main__logged-task-delete" onClick={() => { props.removeTask(id) }}>
+            <button className="main__logged-task-delete" onClick={() => { const removeTask = { taskID: _id }; props.removeTask(removeTask) }}>
                 <i className="fas fa-times"></i>
             </button>
         </li>
     </>);
 }
 
-const MDTP = { changeStatus, removeTask, changeTask, changeDate }
+const MDTP = { changeStatus, changeTask, changeDate }
 
 export default connect(null, MDTP)(TaskElement);

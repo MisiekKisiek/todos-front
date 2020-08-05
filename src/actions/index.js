@@ -27,6 +27,11 @@ export const removeTask = (removeId) => ({
     removeId
 })
 
+export const getAllTasks = (wholeTasks) => ({
+    type: "GET_TASKS",
+    wholeTasks
+})
+
 export const searchTask = (searchTask) => ({
     type: "SEARCH_TASK",
     searchTask

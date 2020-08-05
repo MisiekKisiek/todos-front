@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Redirect } from "react-router-dom";
 
 const LoginComponent = (props) => {
   const { handleLabelStyle } = props;
@@ -60,24 +60,6 @@ const LoginComponent = (props) => {
       });
   };
 
-  const test = (e) => {
-    e.preventDefault();
-    fetch("http://localhost:9000/tasks/addTask", {
-      method: "POST",
-      headers: {
-        Authorization: `bearer ${localStorage.getItem("token")}`,
-        "Content-type": "application/json",
-      },
-      mode: "cors",
-      body: JSON.stringify({
-        task: "dupsko",
-      }),
-    })
-      .then((e) => e.json())
-      .then((e) => console.log(e))
-      .catch((err) => console.log(err));
-  };
-
   return (
     <>
       <div className="login">
@@ -131,13 +113,6 @@ const LoginComponent = (props) => {
               }}
             >
               Log in!
-            </button>
-            <button
-              onClick={(e) => {
-                test(e);
-              }}
-            >
-              test
             </button>
           </form>
         </div>

@@ -26,6 +26,11 @@ export const allTasks = (state = [], action) => {
                 ele.splice([state.findIndex(e => e.id === action.removeId)], 1);
                 return ele
             }
+        case "GET_TASKS":
+            {
+                console.log(action.wholeTasks)
+                return action.wholeTasks
+            }
         default:
             return state
     }

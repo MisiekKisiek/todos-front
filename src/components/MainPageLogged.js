@@ -15,7 +15,6 @@ import {
 const MainPageLogged = (props) => {
   const [writeTask, setwriteTask] = useState("");
   const [writeSearchTask, setwriteSearchTask] = useState("");
-  const [at, setat] = useState([]);
 
   const handleInputs = (e) => {
     if (e.target.name === "add-task") {
@@ -29,24 +28,62 @@ const MainPageLogged = (props) => {
     }
   };
 
-  useEffect(() => {
-    fetch("http://localhost:9000/tasks/getTasks", {
-      headers: { Authorization: `bearer ${localStorage.getItem("token")}` },
+  const addTask = (e) => {
+    e.preventDefault();
+
+    fetch("http://localhost:9000/tasks/addTask", {
+      method: "POST",
+      headers: {
+        Authorization: `bearer ${localStorage.getItem("token")}`,
+        "Content-type": "application/json",
+      },
+      mode: "cors",
+      body: JSON.stringify({
+        task: writeTask,
+      }),
     })
       .then((e) => e.json())
-      .then((e) => setat(e));
-  }, [writeTask, writeSearchTask]);
-
-  const addTaskElement = (e) => {
-    e.preventDefault();
-    props.addTask(writeTask, uuid(), "Add deadline");
+      .then((e) => console.log(e))
+      .catch((err) => console.log(err));
     setwriteTask("");
-  };
+    props.getAllTasks()
+  }
+
+  const removeTask = (taskID) => {
+    fetch('http://localhost:9000/tasks/removeTask', {
+      method: 'DELETE', headers: {
+        'Content-type': 'application/json',
+        'Authorization': `bearer ${localStorage.getItem('token')}`
+      },
+      mode: 'cors',
+      body: JSON.stringify(taskID)
+    })
+      .then(e => e.json())
+      .then(res => { console.log(res) })
+    props.getAllTasks()
+  }
+
+  const editTask = (changedTask) => {
+    fetch('http://localhost:9000/tasks/editTask',
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `bearer ${localStorage.getItem('token')}`
+        },
+        mode: 'cors',
+        body: JSON.stringify(changedTask)
+      }).then(e => e.json()).then(res => { console.log(res) })
+    props.getAllTasks()
+  }
+
+  useEffect(() => {
+    props.getAllTasks()
+  }, []);
 
   const searchTaskElement = (e) => {
     e.preventDefault();
     props.searchTask(writeSearchTask);
-    // props.searchTask("")
   };
 
   const clearInputValues = (e) => {
@@ -69,13 +106,13 @@ const MainPageLogged = (props) => {
     }
     if (props.searchTasks) {
       taskList = taskList.filter((e) =>
-        `${e.task}${e.date}`
+        `${e.task}${e.deadline}`
           .toLowerCase()
           .includes(props.searchTasks.toLowerCase())
       );
     }
     taskList = taskList.map((e) => (
-      <TaskElement element={e} key={e.id}></TaskElement>
+      <TaskElement element={e} key={e._id} removeTask={removeTask} editTask={editTask}></TaskElement>
     ));
     return taskList;
   };
@@ -99,7 +136,7 @@ const MainPageLogged = (props) => {
                 <button
                   type="submit"
                   onClick={(e) => {
-                    addTaskElement(e);
+                    addTask(e)
                   }}
                 >
                   <i className="fas fa-plus"></i>

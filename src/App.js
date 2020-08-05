@@ -8,7 +8,7 @@ class App extends Component {
   state = {};
 
   componentDidMount() {
-    localStorage.setItem("token", "a");
+    localStorage.setItem("token", "");
     localStorage.setItem("logged", false);
   }
   render() {
