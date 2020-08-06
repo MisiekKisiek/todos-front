@@ -52,7 +52,6 @@ const LoginComponent = (props) => {
         ]);
         localStorage.setItem("token", e.token);
         localStorage.setItem("logged", true);
-        // window.location.href = "/"
         alert("Zostałeś zalogowany.");
       })
       .catch((err) => {

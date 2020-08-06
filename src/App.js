@@ -11,6 +11,7 @@ class App extends Component {
     localStorage.setItem("token", "");
     localStorage.setItem("logged", false);
   }
+
   render() {
     return (
       <div className="App">

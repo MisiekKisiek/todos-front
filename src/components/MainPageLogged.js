@@ -28,10 +28,10 @@ const MainPageLogged = (props) => {
     }
   };
 
-  const addTask = (e) => {
+  const addTask = async (e) => {
     e.preventDefault();
 
-    fetch("http://localhost:9000/tasks/addTask", {
+    await fetch("http://localhost:9000/tasks/addTask", {
       method: "POST",
       headers: {
         Authorization: `bearer ${localStorage.getItem("token")}`,
@@ -43,42 +43,56 @@ const MainPageLogged = (props) => {
       }),
     })
       .then((e) => e.json())
-      .then((e) => console.log(e))
+      .then((e) => {
+        setwriteTask("");
+        props.getAllTasks();
+        console.log(e);
+      })
       .catch((err) => console.log(err));
-    setwriteTask("");
-    props.getAllTasks()
-  }
+  };
 
   const removeTask = (taskID) => {
-    fetch('http://localhost:9000/tasks/removeTask', {
-      method: 'DELETE', headers: {
-        'Content-type': 'application/json',
-        'Authorization': `bearer ${localStorage.getItem('token')}`
+    fetch("http://localhost:9000/tasks/removeTask", {
+      method: "DELETE",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `bearer ${localStorage.getItem("token")}`,
       },
-      mode: 'cors',
-      body: JSON.stringify(taskID)
+      mode: "cors",
+      body: JSON.stringify(taskID),
     })
-      .then(e => e.json())
-      .then(res => { console.log(res) })
-    props.getAllTasks()
-  }
+      .then((e) => e.json())
+      .then((res) => {
+        props.getAllTasks();
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const editTask = (changedTask) => {
-    fetch('http://localhost:9000/tasks/editTask',
-      {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `bearer ${localStorage.getItem('token')}`
-        },
-        mode: 'cors',
-        body: JSON.stringify(changedTask)
-      }).then(e => e.json()).then(res => { console.log(res) })
-    props.getAllTasks()
-  }
+    fetch("http://localhost:9000/tasks/editTask", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `bearer ${localStorage.getItem("token")}`,
+      },
+      mode: "cors",
+      body: JSON.stringify(changedTask),
+    })
+      .then((e) => e.json())
+      .then((res) => {
+        props.getAllTasks();
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   useEffect(() => {
-    props.getAllTasks()
+    props.getAllTasks();
   }, []);
 
   const searchTaskElement = (e) => {
@@ -112,7 +126,12 @@ const MainPageLogged = (props) => {
       );
     }
     taskList = taskList.map((e) => (
-      <TaskElement element={e} key={e._id} removeTask={removeTask} editTask={editTask}></TaskElement>
+      <TaskElement
+        element={e}
+        key={e._id}
+        removeTask={removeTask}
+        editTask={editTask}
+      ></TaskElement>
     ));
     return taskList;
   };
@@ -136,7 +155,7 @@ const MainPageLogged = (props) => {
                 <button
                   type="submit"
                   onClick={(e) => {
-                    addTask(e)
+                    addTask(e);
                   }}
                 >
                   <i className="fas fa-plus"></i>
