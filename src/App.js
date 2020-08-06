@@ -5,7 +5,25 @@ import MainPage from "./pages/MainPage";
 import Footer from "./components/Footer";
 
 class App extends Component {
-  state = {};
+  constructor() {
+    super()
+    this.state = {
+      logged: localStorage.getItem('logged')
+    }
+    this.forceUpdateApp = this.forceUpdateApp.bind(this)
+  }
+
+  forceUpdateApp() {
+    this.setState({
+      logged: localStorage.getItem('logged')
+    })
+  }
+
+  logOut = () => {
+    localStorage.setItem("token", "");
+    localStorage.setItem("logged", false);
+    this.forceUpdateApp()
+  }
 
   componentDidMount() {
     localStorage.setItem("token", "");
@@ -15,8 +33,8 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Header></Header>
-        <MainPage></MainPage>
+        <Header logged={this.state.logged} logOut={this.logOut}></Header>
+        <MainPage forceUpdateApp={this.forceUpdateApp} logged={this.state.logged}></MainPage>
         <Footer></Footer>
       </div>
     );

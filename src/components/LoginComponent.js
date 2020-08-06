@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { NavLink, Redirect } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const LoginComponent = (props) => {
   const { handleLabelStyle } = props;
@@ -37,26 +37,22 @@ const LoginComponent = (props) => {
       }),
     })
       .then((e) => {
-        if (e.status === 200) {
-          return e.json();
-        } else {
-          alert("Coś poszło nie tak.");
-        }
+        return e.json()
+      }, (err) => {
+        console.log(err)
       })
-      .then((e) => {
+      .then(async (e) => {
         setloginInput("");
         setpasswordInput("");
         handleLabelStyle([
           [loginInputElement, loginLabelElement],
           [passwordInputElement, passwordLabelElement],
         ]);
-        localStorage.setItem("token", e.token);
-        localStorage.setItem("logged", true);
-        alert("Zostałeś zalogowany.");
+        await localStorage.setItem("token", e.token);
+        await localStorage.setItem("logged", true);
+        alert(e);
+        props.forceUpdateApp();
       })
-      .catch((err) => {
-        alert(err);
-      });
   };
 
   return (

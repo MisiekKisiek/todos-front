@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import uuid from "react-uuid";
 
 import TaskElement from "./TaskElement";
 
@@ -8,8 +7,6 @@ import {
   searchTask,
   filterDone,
   filterUndone,
-  addTask,
-  changeStatus,
 } from "../actions/index";
 
 const MainPageLogged = (props) => {
@@ -45,14 +42,14 @@ const MainPageLogged = (props) => {
       .then((e) => e.json())
       .then((e) => {
         setwriteTask("");
-        props.getAllTasks();
         console.log(e);
       })
       .catch((err) => console.log(err));
+    props.getAllTasks();
   };
 
-  const removeTask = (taskID) => {
-    fetch("http://localhost:9000/tasks/removeTask", {
+  const removeTask = async (taskID) => {
+    await fetch("http://localhost:9000/tasks/removeTask", {
       method: "DELETE",
       headers: {
         "Content-type": "application/json",
@@ -63,16 +60,17 @@ const MainPageLogged = (props) => {
     })
       .then((e) => e.json())
       .then((res) => {
-        props.getAllTasks();
+
         console.log(res);
       })
       .catch((err) => {
         console.log(err);
       });
+    props.getAllTasks();
   };
 
-  const editTask = (changedTask) => {
-    fetch("http://localhost:9000/tasks/editTask", {
+  const editTask = async (changedTask) => {
+    await fetch("http://localhost:9000/tasks/editTask", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -81,14 +79,17 @@ const MainPageLogged = (props) => {
       mode: "cors",
       body: JSON.stringify(changedTask),
     })
-      .then((e) => e.json())
+      .then((e) =>
+        e.json()
+      )
       .then((res) => {
-        props.getAllTasks();
+
         console.log(res);
       })
       .catch((err) => {
         console.log(err);
       });
+    props.getAllTasks();
   };
 
   useEffect(() => {
@@ -254,6 +255,6 @@ const MSTP = (state) => {
   };
 };
 
-const MDTP = { searchTask, filterDone, filterUndone, addTask, changeStatus };
+const MDTP = { searchTask, filterDone, filterUndone };
 
 export default connect(MSTP, MDTP)(MainPageLogged);

@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { changeStatus, removeTask, changeTask, changeDate } from '../actions/index';
 
 const TaskElement = (props) => {
     const { checked, task, _id, deadline } = props.element
@@ -8,8 +6,6 @@ const TaskElement = (props) => {
 
     const [writeTask, setwriteTask] = useState(task);
     const [writeDate, setwriteDate] = useState(deadline);
-
-    const [forceUpdate, setforceUpdate] = useState(1);
 
     const addActiveClassToTask = (e) => {
         const taskItem = e.target.parentNode.classList.contains('main__logged-task') ? e.target.parentNode : e.target.parentNode.parentNode;
@@ -56,7 +52,6 @@ const TaskElement = (props) => {
                     (e) => {
                         addActiveClassToTask(e);
                         const changedTask = { taskID: _id, task: writeTask, deadline: writeDate, checked: check };
-                        console.log(changedTask)
                         props.editTask({ changedTask });
                     }}>
                 <i className="fas fa-check" dataname="accept"></i>
@@ -75,6 +70,4 @@ const TaskElement = (props) => {
     </>);
 }
 
-const MDTP = { changeStatus, changeTask, changeDate }
-
-export default connect(null, MDTP)(TaskElement);
+export default TaskElement;

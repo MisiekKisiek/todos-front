@@ -3,8 +3,8 @@ import { Route, Switch, Redirect } from "react-router-dom";
 
 import LoginComponent from "../components/LoginComponent";
 import RegisterComponent from "../components/RegisterComponent";
-
-import Main from "../components/Main";
+import Logged from '../components/MainPageLogged';
+import Unlogged from '../components/MainPageUnlogged';
 
 import { connect } from "react-redux";
 import { getAllTasks } from "../actions/index";
@@ -19,21 +19,19 @@ class MainPage extends Component {
     fetch("http://localhost:9000/tasks/getAllTasks", {
       headers: { Authorization: `bearer ${localStorage.getItem("token")}` },
     })
-      .then((e) => {
-        if (e.status === 401) {
-          alert("You have been logged out.");
-        }
-        return e.json();
-      })
+      .then((e) => e.json(), (err) => {
+        console.log('dupa', err);
+      }
+      )
       .then(async (tasks) => {
         await this.props.getAllTasks(tasks);
-      })
-      .catch((err) => {
+      }).catch(err => {
         localStorage.setItem("token", "");
         localStorage.setItem("logged", false);
+        this.props.forceUpdateApp();
         this.forceUpdate();
-        console.log(err);
-      });
+        alert('You have been logged out.')
+      })
   };
 
   handleLabelStyle = (tab) => {
@@ -52,16 +50,21 @@ class MainPage extends Component {
         <main className="main">
           <Switch>
             <Route exact path="/">
-              <Main getAllTasks={this.getAllTasks}></Main>
+              {this.props.logged === "false" ? (
+                <Unlogged></Unlogged>
+              ) : (
+                  <Logged getAllTasks={this.getAllTasks}></Logged>
+                )}
             </Route>
             <Route path="/LogIn">
               {localStorage.getItem("logged") === "true" ? (
                 <Redirect to="/"></Redirect>
               ) : (
-                <LoginComponent
-                  handleLabelStyle={this.handleLabelStyle}
-                ></LoginComponent>
-              )}
+                  <LoginComponent
+                    handleLabelStyle={this.handleLabelStyle}
+                    forceUpdateApp={this.props.forceUpdateApp}
+                  ></LoginComponent>
+                )}
             </Route>
             <Route path="/Register">
               <RegisterComponent
@@ -70,13 +73,6 @@ class MainPage extends Component {
             </Route>
             <Redirect to="/"></Redirect>
           </Switch>
-          <button
-            onClick={() => {
-              this.forceUpdate();
-            }}
-          >
-            update
-          </button>
         </main>
       </>
     );
