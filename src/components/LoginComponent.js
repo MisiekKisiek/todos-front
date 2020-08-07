@@ -37,22 +37,16 @@ const LoginComponent = (props) => {
       }),
     })
       .then((e) => {
-        return e.json()
-      }, (err) => {
-        console.log(err)
+        if (e.status === 200) return e.json()
+        if (e.status === 401) throw Error('Username or login are invalid')
+        else throw Error('We have some problems, sorry')
       })
       .then(async (e) => {
-        setloginInput("");
-        setpasswordInput("");
-        handleLabelStyle([
-          [loginInputElement, loginLabelElement],
-          [passwordInputElement, passwordLabelElement],
-        ]);
         await localStorage.setItem("token", e.token);
         await localStorage.setItem("logged", true);
-        alert(e);
+        alert('You have been logged in!');
         props.forceUpdateApp();
-      })
+      }).catch((err) => { alert(err.message) })
   };
 
   return (
@@ -103,8 +97,14 @@ const LoginComponent = (props) => {
             </div>
             <button
               type="submit"
-              onClick={(e) => {
+              onClick={async (e) => {
                 registerFormSubmit(e);
+                await setloginInput("");
+                await setpasswordInput("");
+                handleLabelStyle([
+                  [loginInputElement, loginLabelElement],
+                  [passwordInputElement, passwordLabelElement],
+                ]);
               }}
             >
               Log in!

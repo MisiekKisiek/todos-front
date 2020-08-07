@@ -5,6 +5,7 @@ import LoginComponent from "../components/LoginComponent";
 import RegisterComponent from "../components/RegisterComponent";
 import Logged from '../components/MainPageLogged';
 import Unlogged from '../components/MainPageUnlogged';
+import UserPanel from '../components/UserPanel';
 
 import { connect } from "react-redux";
 import { getAllTasks } from "../actions/index";
@@ -57,19 +58,22 @@ class MainPage extends Component {
                 )}
             </Route>
             <Route path="/LogIn">
-              {localStorage.getItem("logged") === "true" ? (
-                <Redirect to="/"></Redirect>
+              {this.props.logged === "false" ? (
+                <LoginComponent
+                  handleLabelStyle={this.handleLabelStyle}
+                  forceUpdateApp={this.props.forceUpdateApp}
+                ></LoginComponent>
               ) : (
-                  <LoginComponent
-                    handleLabelStyle={this.handleLabelStyle}
-                    forceUpdateApp={this.props.forceUpdateApp}
-                  ></LoginComponent>
+                  <Redirect to="/"></Redirect>
                 )}
             </Route>
             <Route path="/Register">
-              <RegisterComponent
+              {this.props.logged === "false" ? <RegisterComponent
                 handleLabelStyle={this.handleLabelStyle}
-              ></RegisterComponent>
+              ></RegisterComponent> : <Redirect to="/"></Redirect>}
+            </Route>
+            <Route path='/User'>
+
             </Route>
             <Redirect to="/"></Redirect>
           </Switch>

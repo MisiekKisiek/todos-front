@@ -140,7 +140,7 @@ const MainPageLogged = (props) => {
   return (
     <>
       <div className="main__logged-wrap">
-        <nav className="main__logged-nav">
+        <aside className="main__logged-nav">
           <div action="" className="main__logged-form">
             <form className="main__logged-add-task">
               <label htmlFor="add-task">
@@ -232,7 +232,7 @@ const MainPageLogged = (props) => {
               </label>
             </div>
           </div>
-        </nav>
+        </aside>
         <section className="main__logged-tasks">
           <div className="main__logged-tasks-wrap">
             <ul className="main__logged-tasks-list">

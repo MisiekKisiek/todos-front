@@ -316,10 +316,12 @@
   width: $width;
   height: $height;
   margin-top: 40px;
+  line-height: $height;
   border: none;
   border-radius: calc(#{$height} / 2);
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
+  font-size: 13px;
   color: white;
   background-color: rgba(0, 0, 0, 0.8);
   transition: 0.3s;

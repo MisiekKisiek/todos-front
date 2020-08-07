@@ -29,10 +29,10 @@ const Header = (props) => {
           {props.logged === "true" ?
             <>
               <li className="header__user-item-login">
-                <NavLink to="/Register" onClick={() => { showMenu('remove') }}>User</NavLink>
+                <NavLink to="/User" onClick={() => { showMenu('remove') }}>User</NavLink>
               </li>
               <li className="header__user-item-login">
-                <NavLink to="/" onClick={() => { props.logOut() }}>Log out</NavLink>
+                <NavLink to="/" onClick={() => { props.logOut(); showMenu('remove') }}>Log out</NavLink>
               </li>
             </>
             :
