@@ -22,12 +22,16 @@ class App extends Component {
   logOut = () => {
     localStorage.setItem("token", "");
     localStorage.setItem("logged", false);
+    localStorage.setItem('user', "");
+    localStorage.setItem('email', "");
     this.forceUpdateApp()
   }
 
   componentDidMount() {
     localStorage.setItem("token", "");
     localStorage.setItem("logged", false);
+    localStorage.setItem('user', "");
+    localStorage.setItem('email', "");
   }
 
   render() {

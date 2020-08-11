@@ -17,7 +17,7 @@ class MainPage extends Component {
   }
 
   getAllTasks = () => {
-    fetch("http://localhost:9000/tasks/getAllTasks", {
+    fetch("/tasks/getAllTasks", {
       headers: { Authorization: `bearer ${localStorage.getItem("token")}` },
     })
       .then((e) => e.json(), (err) => {
@@ -73,7 +73,7 @@ class MainPage extends Component {
               ></RegisterComponent> : <Redirect to="/"></Redirect>}
             </Route>
             <Route path='/User'>
-
+              {this.props.logged === "true" ? <UserPanel></UserPanel> : <Redirect to='/'></Redirect>}
             </Route>
             <Redirect to="/"></Redirect>
           </Switch>

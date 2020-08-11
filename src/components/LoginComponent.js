@@ -25,9 +25,9 @@ const LoginComponent = (props) => {
     }
   };
 
-  const registerFormSubmit = (e) => {
+  const loginFormSubmit = (e) => {
     e.preventDefault();
-    fetch("http://localhost:9000/auth/Login", {
+    fetch("/auth/Login", {
       method: "POST",
       headers: { "Content-type": "application/json" },
       mode: "cors",
@@ -44,6 +44,8 @@ const LoginComponent = (props) => {
       .then(async (e) => {
         await localStorage.setItem("token", e.token);
         await localStorage.setItem("logged", true);
+        await localStorage.setItem('user', e.user);
+        await localStorage.setItem('email', e.email);
         alert('You have been logged in!');
         props.forceUpdateApp();
       }).catch((err) => { alert(err.message) })
@@ -98,7 +100,7 @@ const LoginComponent = (props) => {
             <button
               type="submit"
               onClick={async (e) => {
-                registerFormSubmit(e);
+                loginFormSubmit(e);
                 await setloginInput("");
                 await setpasswordInput("");
                 handleLabelStyle([

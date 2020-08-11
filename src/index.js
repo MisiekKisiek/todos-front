@@ -10,8 +10,6 @@ import "./scss/Main.scss";
 import { store } from "./store";
 import { Provider } from "react-redux";
 
-// const history = syncHistoryWithStore(browserHistory, store);
-
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
