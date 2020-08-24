@@ -10,6 +10,8 @@ import UserPanel from '../components/UserPanel';
 import { connect } from "react-redux";
 import { getAllTasks } from "../actions/index";
 
+import { APIPrefix as API } from '../tools/apiPrefixes'
+
 class MainPage extends Component {
   constructor(props) {
     super(props);
@@ -17,7 +19,7 @@ class MainPage extends Component {
   }
 
   getAllTasks = () => {
-    fetch("/tasks/getAllTasks", {
+    fetch(`${API}/tasks/getAllTasks`, {
       headers: { Authorization: `bearer ${localStorage.getItem("token")}` },
     })
       .then((e) => e.json(), (err) => {

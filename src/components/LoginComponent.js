@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import { NavLink } from "react-router-dom";
+import { APIPrefix as API } from '../tools/apiPrefixes'
 
 const LoginComponent = (props) => {
   const { handleLabelStyle } = props;
@@ -27,7 +28,7 @@ const LoginComponent = (props) => {
 
   const loginFormSubmit = (e) => {
     e.preventDefault();
-    fetch("/auth/Login", {
+    fetch(`${API}/auth/Login`, {
       method: "POST",
       headers: { "Content-type": "application/json" },
       mode: "cors",

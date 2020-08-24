@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import { NavLink } from "react-router-dom";
+import { APIPrefix as API } from '../tools/apiPrefixes'
 
 const RegisterComponent = (props) => {
   const { handleLabelStyle } = props;
@@ -33,7 +34,7 @@ const RegisterComponent = (props) => {
 
   const registerFormSubmit = (e) => {
     e.preventDefault();
-    fetch("http://localhost:9000/auth/Register", {
+    fetch(`${API}/auth/Register`, {
       method: "POST",
       headers: { "Content-type": "application/json" },
       mode: "cors",

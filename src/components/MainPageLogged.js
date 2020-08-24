@@ -9,6 +9,8 @@ import {
   filterUndone,
 } from "../actions/index";
 
+import { APIPrefix as API } from '../tools/apiPrefixes'
+
 const MainPageLogged = (props) => {
   const [writeTask, setwriteTask] = useState("");
   const [writeSearchTask, setwriteSearchTask] = useState("");
@@ -28,7 +30,7 @@ const MainPageLogged = (props) => {
   const addTask = async (e) => {
     e.preventDefault();
 
-    await fetch("http://localhost:9000/tasks/addTask", {
+    await fetch(`${API}/tasks/addTask`, {
       method: "POST",
       headers: {
         Authorization: `bearer ${localStorage.getItem("token")}`,
@@ -49,7 +51,7 @@ const MainPageLogged = (props) => {
   };
 
   const removeTask = async (taskID) => {
-    await fetch("http://localhost:9000/tasks/removeTask", {
+    await fetch(`${API}/tasks/removeTask`, {
       method: "DELETE",
       headers: {
         "Content-type": "application/json",
@@ -70,7 +72,7 @@ const MainPageLogged = (props) => {
   };
 
   const editTask = async (changedTask) => {
-    await fetch("http://localhost:9000/tasks/editTask", {
+    await fetch(`${API}/tasks/editTask`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
