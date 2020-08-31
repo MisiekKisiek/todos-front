@@ -29,7 +29,6 @@ const MainPageLogged = (props) => {
 
   const addTask = async (e) => {
     e.preventDefault();
-
     await fetch(`${API}/tasks/addTask`, {
       method: "POST",
       headers: {

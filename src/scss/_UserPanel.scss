@@ -4,11 +4,15 @@
 .user-panel{
     height: 100%;
     .user-panel__wrap{
+        position: relative;
         @include flex-mother($flex-direction: column);
+        .user-panel__main-page-nav{
+            @include main-page-link();
+        }
         .user-panel__photo{
             height: 200px;
             padding: 20px;
-            
+            margin-top: 15px;
             img{
                 height: 100%;
                 border-radius: 20px;
