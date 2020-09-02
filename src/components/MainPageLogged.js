@@ -3,13 +3,9 @@ import React, { useState, useEffect } from "react";
 import TaskElement from "./TaskElement";
 
 import { connect } from "react-redux";
-import {
-  searchTask,
-  filterDone,
-  filterUndone,
-} from "../actions/index";
+import { searchTask, filterDone, filterUndone } from "../actions/index";
 
-import { APIPrefix as API } from '../tools/apiPrefixes'
+import { APIPrefix as API } from "../tools/apiPrefixes";
 
 const MainPageLogged = (props) => {
   const [writeTask, setwriteTask] = useState("");
@@ -60,7 +56,6 @@ const MainPageLogged = (props) => {
     })
       .then((e) => e.json())
       .then((res) => {
-
         console.log(res);
       })
       .catch((err) => {
@@ -79,9 +74,7 @@ const MainPageLogged = (props) => {
       mode: "cors",
       body: JSON.stringify(changedTask),
     })
-      .then((e) =>
-        e.json()
-      )
+      .then((e) => e.json())
       .then((res) => {
         console.log(res);
       })
@@ -125,7 +118,12 @@ const MainPageLogged = (props) => {
           .includes(props.searchTasks.toLowerCase())
       );
     }
-    taskList.sort()
+    const test = taskList.sort((a, b) => {
+      if (a.deadline === "Add deadline") {
+        return a;
+      } else return a.deadline - b.deadline;
+    });
+    console.log("test", test);
     taskList = taskList.map((e) => (
       <TaskElement
         element={e}
