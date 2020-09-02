@@ -23,17 +23,18 @@ class MainPage extends Component {
       headers: { Authorization: `bearer ${localStorage.getItem("token")}` },
     })
       .then((e) => e.json(), (err) => {
-        console.log('dupa', err);
       }
       )
       .then(async (tasks) => {
-        await this.props.getAllTasks(tasks);
+        if (localStorage.getItem('logged') === "true") {
+          await this.props.getAllTasks(tasks);
+        }
       }).catch(err => {
         localStorage.setItem("token", "");
         localStorage.setItem("logged", false);
         this.props.forceUpdateApp();
         this.forceUpdate();
-        alert('You have been logged out.')
+        // alert('You have been logged out.')
       })
   };
 

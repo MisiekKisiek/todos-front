@@ -43,9 +43,8 @@ const MainPageLogged = (props) => {
       .then((e) => e.json())
       .then((e) => {
         setwriteTask("");
-        console.log(e);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => alert("We occure an error."));
     props.getAllTasks();
   };
 
@@ -84,7 +83,6 @@ const MainPageLogged = (props) => {
         e.json()
       )
       .then((res) => {
-
         console.log(res);
       })
       .catch((err) => {
@@ -127,6 +125,7 @@ const MainPageLogged = (props) => {
           .includes(props.searchTasks.toLowerCase())
       );
     }
+    taskList.sort()
     taskList = taskList.map((e) => (
       <TaskElement
         element={e}
