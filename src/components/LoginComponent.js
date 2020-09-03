@@ -113,6 +113,12 @@ const LoginComponent = (props) => {
               Log in!
             </button>
           </form>
+          <nav className="login__register-nav">
+            <span>or if You don't have an account, </span>
+            <NavLink to="/Register">
+              <span>Register</span>
+            </NavLink>
+          </nav>
         </div>
       </div>
     </>

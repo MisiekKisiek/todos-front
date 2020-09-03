@@ -56,10 +56,9 @@ const MainPageLogged = (props) => {
     })
       .then((e) => e.json())
       .then((res) => {
-        console.log(res);
       })
       .catch((err) => {
-        console.log(err);
+        alert(err);
       });
     props.getAllTasks();
   };
@@ -76,10 +75,9 @@ const MainPageLogged = (props) => {
     })
       .then((e) => e.json())
       .then((res) => {
-        console.log(res);
       })
       .catch((err) => {
-        console.log(err);
+        alert(err);
       });
     props.getAllTasks();
   };
@@ -118,12 +116,16 @@ const MainPageLogged = (props) => {
           .includes(props.searchTasks.toLowerCase())
       );
     }
-    const test = taskList.sort((a, b) => {
+    const sortFunc = (a, b) => {
       if (a.deadline === "Add deadline") {
-        return a;
-      } else return a.deadline - b.deadline;
-    });
-    console.log("test", test);
+        return 1;
+      } else {
+        return Date.parse(a.deadline) - Date.parse(b.deadline)
+      };
+    }
+    const taskChecked = taskList.filter(e => e.checked).sort(sortFunc)
+    const taskUnchecked = taskList.filter(e => !e.checked).sort(sortFunc)
+    taskList = taskUnchecked.concat(taskChecked);
     taskList = taskList.map((e) => (
       <TaskElement
         element={e}

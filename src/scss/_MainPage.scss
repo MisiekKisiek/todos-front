@@ -234,18 +234,8 @@
         }
       }
       .main__unlogged-register{
-        margin-top: 20px;
-        font-size: 18px;
+        @include login-link();
         font-weight: normal;
-        text-align: center;
-        font-family: Georgia, 'Times New Roman', Times, serif;
-        a{
-          color: rgba(0,0,0,0.4);
-          text-decoration: none;
-        }
-        a:hover{
-          color: coral;
-        }
       }
     }
   }
@@ -371,7 +361,7 @@
         .main__logged-form {
           @include flex-mother($flex-direction: column, $align-items: center);
           .main__logged-add-task {
-            @include input($height: 26px, $width: 180px, $margin-top: 10px);
+            @include input($height: 32px, $width: 200px, $margin-top: 10px);
           };
           .main__logged-search-task {
             display: none;
