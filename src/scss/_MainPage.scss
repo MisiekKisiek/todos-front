@@ -339,7 +339,7 @@
   }
 }
 
-@media (max-height: 550px) and (max-width: 1024px) {
+@media (max-height: 550px) and (max-width: 1024px) and (orientation: landscape) {
   .main {
     max-height: none;
     .main__logged-wrap {
