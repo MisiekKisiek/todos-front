@@ -1,3 +1,5 @@
+@import "./Keyframes";
+
 @mixin flex-mother(
   $flex-direction: row,
   $justify-content: stretch,
@@ -79,6 +81,30 @@
   }
   label:hover span {
     display: block;
+  }
+  .main__loading-btn {
+    display: none;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: calc(#{$height} - 2px);
+    height: calc(#{$height} - 2px);
+    line-height: calc(#{$height} - 4px);
+    padding: 1px;
+    border-radius: calc(#{$height} / 2);
+    border: none;
+    background-color: rgba(0, 0, 0, 1);
+    color: #fff;
+    font-size: calc((#{$height} - 2px) / 2);
+    font-weight: bold;
+    text-align: center;
+    transition: 0.3s;
+    * {
+      animation: 2s add-task-loading infinite linear;
+    }
+    &.active {
+      display: block;
+    }
   }
 }
 
@@ -356,16 +382,16 @@
   }
 }
 
-@mixin login-link(){
+@mixin login-link() {
   margin-top: 20px;
   text-align: center;
   font-size: 18px;
   color: rgb(0, 0, 0);
   font-family: Georgia, "Times New Roman", Times, serif;
-  a{
+  a {
     color: rgba(0, 0, 0, 0.2);
     text-decoration: none;
-    &:hover{
+    &:hover {
       color: coral;
     }
   }

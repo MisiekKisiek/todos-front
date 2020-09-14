@@ -1,8 +1,44 @@
 @keyframes user-border-color {
-    0%{background-image: linear-gradient(45deg, #ddd,coral, #ddd)}
-    0%{background-image: linear-gradient(45deg, #ddd,coral, #ddd)}
-    25%{background-image: linear-gradient(45deg, coral, #ddd, coral)}
-    50%{background-image: linear-gradient(45deg, #ddd,coral, #ddd)}
-    75%{background-image: linear-gradient(45deg, coral, #ddd, coral)}
-    100%{background-image: linear-gradient(45deg, #ddd,coral, #ddd)}
+  0% {
+    background-image: linear-gradient(45deg, #ddd, coral, #ddd);
+  }
+  0% {
+    background-image: linear-gradient(45deg, #ddd, coral, #ddd);
+  }
+  25% {
+    background-image: linear-gradient(45deg, coral, #ddd, coral);
+  }
+  50% {
+    background-image: linear-gradient(45deg, #ddd, coral, #ddd);
+  }
+  75% {
+    background-image: linear-gradient(45deg, coral, #ddd, coral);
+  }
+  100% {
+    background-image: linear-gradient(45deg, #ddd, coral, #ddd);
+  }
+}
+
+@keyframes logo-add {
+  0% {
+    background-color: #fff;
+  }
+  10% {
+    background-color: coral;
+  }
+  100% {
+    background-color: #fff;
+  }
+}
+
+@keyframes add-task-loading {
+  0% {
+    transform: rotateZ(0deg);
+  }
+  50% {
+    transform: rotateZ(180deg);
+  }
+  100% {
+    transform: rotateZ(360deg);
+  }
 }

@@ -1,9 +1,9 @@
 import React, { useState, useRef } from "react";
 import { NavLink } from "react-router-dom";
-import { APIPrefix as API } from '../tools/apiPrefixes'
+import { APIPrefix as API } from "../tools/apiPrefixes";
 
 const LoginComponent = (props) => {
-  const { handleLabelStyle } = props;
+  const { handleLabelStyle, handleMessagePopup } = props;
 
   const [loginInput, setloginInput] = useState("");
   const [passwordInput, setpasswordInput] = useState("");
@@ -38,18 +38,21 @@ const LoginComponent = (props) => {
       }),
     })
       .then((e) => {
-        if (e.status === 200) return e.json()
-        if (e.status === 401) throw Error('Username or login are invalid')
-        else throw Error('We have some problems, sorry')
+        if (e.status === 200) return e.json();
+        if (e.status === 401) throw Error("Username or login are invalid");
+        else throw Error("We have some problems, sorry");
       })
       .then(async (e) => {
         await localStorage.setItem("token", e.token);
         await localStorage.setItem("logged", true);
-        await localStorage.setItem('user', e.user);
-        await localStorage.setItem('email', e.email);
-        alert('You have been logged in!');
+        await localStorage.setItem("user", e.user);
+        await localStorage.setItem("email", e.email);
+        handleMessagePopup("You have been logged.");
         props.forceUpdateApp();
-      }).catch((err) => { alert(err.message) })
+      })
+      .catch((err) => {
+        handleMessagePopup(err.message);
+      });
   };
 
   return (

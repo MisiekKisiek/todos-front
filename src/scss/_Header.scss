@@ -1,208 +1,217 @@
-@import './Mixins';
-@import './Variables';
-@import './Keyframes';
+@import "./Mixins";
+@import "./Variables";
+@import "./Keyframes";
 
-.header{
-    position: absolute;
-    top:0;
-    left:auto;
-    height: calc(#{$headerHeight} - 20px);
-    width: 100%;
-    max-width: 1024px;
-    margin: auto;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    background-color: #fff;
-    .header__wrap{
-        @include flex-mother($flex-direction: column-reverse, $justify-content: flex-end);
-        .header__logo{
-            flex-basis: $logoHeight;
-            flex-grow: 1;
-            @include flex-mother();
-            .header__image{
-                height: $logoHeight;
-                padding: 10px;
-                img{
-                    height: calc(#{$logoHeight} - 20px);
-                    border-radius: 5px;
-                }
-                
-            }
-            .header__title{
-                align-self: center;
-                padding: 0;
-                padding-left: 10px;
-                margin: 0;
-                font-family: Georgia, 'Times New Roman', Times, serif;
-                font-weight: 900;
-            }
+.header {
+  position: absolute;
+  top: 0;
+  left: auto;
+  height: calc(#{$headerHeight} - 20px);
+  width: 100%;
+  max-width: 1024px;
+  margin: auto;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  background-color: #fff;
+  .header__wrap {
+    @include flex-mother(
+      $flex-direction: column-reverse,
+      $justify-content: flex-end
+    );
+    .header__logo {
+      flex-basis: $logoHeight;
+      flex-grow: 1;
+      @include flex-mother();
+      .header__image {
+        height: $logoHeight;
+        padding: 10px;
+        img {
+          height: calc(#{$logoHeight} - 20px);
+          border-radius: 5px;
+          background-color: #fff;
+          &.active {
+            animation: 1s logo-add ease-out;
+          }
         }
-        .header__user-list{
-            position: relative;
-            @include flex-mother($align-items:center, $justify-content: flex-end);
-            align-self: flex-end;
-            flex-basis: $loginHeight;
-            width: 150px;
-            margin: 0 20px;
-            list-style-type: none;
-            font-family: Arial, Helvetica, sans-serif;
-            .header__user-item-main-page{
-                display: none;
-                color: #1f133a;
-            }
-            .header__user-item-login{
-                padding: 0 8px;
-                color: #1f133a;
-            }
-            .header__user-item-register{
-                font-weight: bold;
-                padding: 0 8px;
-                color: #1f133a;
-            }
-            *:hover{
-                cursor: pointer;
-                color: coral;
-            }
-            *{
-                a{
-                    color: rgba(0,0,0,0.8);
-                    text-decoration: none;
-                    transition: .1s;
-                }
-            }
+      }
+      .header__title {
+        align-self: center;
+        padding: 0;
+        padding-left: 10px;
+        margin: 0;
+        font-family: Georgia, "Times New Roman", Times, serif;
+        font-weight: 900;
+      }
+    }
+    .header__user-list {
+      position: relative;
+      @include flex-mother($align-items: center, $justify-content: flex-end);
+      align-self: flex-end;
+      flex-basis: $loginHeight;
+      width: 150px;
+      margin: 0 20px;
+      list-style-type: none;
+      font-family: Arial, Helvetica, sans-serif;
+      .header__user-item-main-page {
+        display: none;
+        color: #1f133a;
+      }
+      .header__user-item-login {
+        padding: 0 8px;
+        color: #1f133a;
+      }
+      .header__user-item-register {
+        font-weight: bold;
+        padding: 0 8px;
+        color: #1f133a;
+      }
+      *:hover {
+        cursor: pointer;
+        color: coral;
+      }
+      * {
+        a {
+          color: rgba(0, 0, 0, 0.8);
+          text-decoration: none;
+          transition: 0.1s;
         }
-        .header__user-list:before{
-            position: absolute;
-            bottom: 0;
-            left: 0;
+      }
+    }
+    .header__user-list:before {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      display: block;
+      content: "";
+      background-color: #ddd;
+    }
+    .header__logged-search-task {
+      @include input($height: 32px, $width: 180px);
+      display: none;
+      margin-top: calc((#{$headerHeightLess700Scroll} - 32px - 30px) / 2);
+      // margin-right: 15px;
+    }
+    .header__logged-user-icon {
+      @include flex-mother($align-items: center, $justify-content: center);
+      display: none;
+      min-width: 40px;
+      color: rgba(0, 0, 0, 0.8);
+      cursor: pointer;
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  .header {
+    height: calc(#{$headerHeightLess700} - 20px);
+    // transition: .3s;
+    .header__wrap {
+      @include flex-mother($flex-direction: row, $justify-content: flex-end);
+      .header__logo {
+        @include flex-mother();
+        .header__image {
+          height: $logoHeightLess700;
+          img {
+            height: calc(#{$logoHeightLess700} - 20px);
+          }
+        }
+        .header__title {
+          align-self: center;
+          padding: 0;
+          padding-left: 20px;
+          margin: 0;
+          font-family: Arial, Helvetica, sans-serif;
+          font-weight: 500;
+
+          padding: 5px;
+          font-size: 20px;
+        }
+      }
+      .header__user-list {
+        flex-basis: 180px;
+        @include flex-mother($align-items: center, $justify-content: flex-end);
+        height: $logoHeightLess700;
+        margin: 0 20px 0 0;
+        .header__user-item-login {
+        }
+        .header__user-item-register {
+        }
+        *:hover {
+        }
+      }
+      .header__user-list:before {
+        display: none;
+      }
+    }
+  }
+}
+
+@media (max-width: 400px) {
+  .header {
+    position: fixed;
+    z-index: 999;
+    height: calc(#{$headerHeightLess700Scroll} - 30px);
+    .header__wrap {
+      position: relative;
+      .header__logo {
+        .header__image {
+          height: calc(#{$logoHeightLess700Scroll} + 10px);
+          padding: 5px;
+          img {
+            height: calc(#{$logoHeightLess700Scroll});
+          }
+        }
+        .header__title {
+          display: none;
+        }
+      }
+      .header__user-list {
+        @include flex-mother(
+          $flex-direction: column,
+          $align-items: center,
+          $justify-content: space-around
+        );
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        height: calc(#{$loginHeight} + 40px);
+        width: 100%;
+        background-color: #fff;
+        border-top: 1px solid rgba(0, 0, 0, 0.8);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.8);
+        .header__user-item-main-page {
+          display: block;
+        }
+        .header__user-item-login {
+        }
+        .header__user-item-register {
+          font-weight: normal;
+        }
+        * {
+          width: 100px;
+          text-align: center;
+          a {
+            display: block;
             width: 100%;
-            height: 1px;
-            display:block;
-            content:"";
-            background-color: #ddd;
+          }
         }
-        .header__logged-search-task{
-            @include input($height: 32px, $width: 180px);
-            display: none;
-            margin-top: calc((#{$headerHeightLess700Scroll} - 32px - 30px) / 2);
-            // margin-right: 15px;
+        *:hover {
         }
-        .header__logged-user-icon{
-            @include flex-mother($align-items:center, $justify-content:center);
-            display:none;
-            min-width: 40px;
-            color: rgba(0,0,0,0.8);
-            cursor: pointer;
-        }
+      }
+      .header__user-list.active {
+        display: flex;
+      }
+      .header__user-list:before {
+      }
+      .header__logged-search-task {
+        display: block;
+      }
+      .header__logged-user-icon {
+        display: flex;
+      }
     }
+  }
 }
-
-@media (max-width: 700px){
-    .header{
-        height: calc(#{$headerHeightLess700} - 20px);
-        // transition: .3s;
-        .header__wrap{
-            @include flex-mother($flex-direction: row, $justify-content: flex-end);
-            .header__logo{
-                @include flex-mother();
-                .header__image{
-                    height: $logoHeightLess700;
-                    img{
-                        height: calc(#{$logoHeightLess700} - 20px);
-                    }
-                }
-                .header__title{
-                    align-self: center;
-                padding: 0;
-                padding-left: 20px;
-                margin: 0;
-                font-family: Arial, Helvetica, sans-serif;
-                font-weight: 500;
-
-                padding:5px;
-                font-size: 20px;
-                }
-            }
-            .header__user-list{
-                flex-basis: 180px;
-                @include flex-mother($align-items:center, $justify-content: flex-end);
-                height: $logoHeightLess700;
-                margin: 0 20px 0 0 ;
-                .header__user-item-login{
-                }
-                .header__user-item-register{
-                }
-                *:hover{
-                }
-            }
-            .header__user-list:before{
-                display: none;
-            }
-        }
-    }
-}
-
-@media(max-width: 400px){
-    .header{
-        position: fixed;
-        z-index: 999;
-        height: calc(#{$headerHeightLess700Scroll} - 30px);
-        .header__wrap{
-            position: relative;
-            .header__logo{
-                .header__image{
-                    height: calc(#{$logoHeightLess700Scroll} + 10px);
-                    padding: 5px;
-                    img{
-                        height: calc(#{$logoHeightLess700Scroll});
-                    }
-                }
-                .header__title{
-                    display: none;
-                }
-            }
-            .header__user-list{
-                @include flex-mother($flex-direction:column, $align-items:center, $justify-content:space-around);
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                height: calc(#{$loginHeight} + 40px);
-                width: 100%;
-                background-color: #fff;
-                border-top: 1px solid rgba(0,0,0,0.8);
-                border-bottom: 1px solid rgba(0,0,0,0.8);
-                .header__user-item-main-page{
-                    display: block;
-                }
-                .header__user-item-login{
-                }
-                .header__user-item-register{
-                    font-weight: normal;
-                }
-                *{
-                    width: 100px;
-                    text-align: center;
-                    a{
-                        display: block;
-                        width: 100%;
-                    }
-                }
-                *:hover{
-                }
-            }
-            .header__user-list.active{
-                display: flex;
-            }
-            .header__user-list:before{
-            }
-            .header__logged-search-task{
-                display: block;
-            }
-            .header__logged-user-icon{
-                display:flex;
-            }
-        }
-    }
-}
-

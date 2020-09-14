@@ -8,8 +8,24 @@ import { searchTask, filterDone, filterUndone } from "../actions/index";
 import { APIPrefix as API } from "../tools/apiPrefixes";
 
 const MainPageLogged = (props) => {
+  const { handleMessagePopup } = props;
+
   const [writeTask, setwriteTask] = useState("");
   const [writeSearchTask, setwriteSearchTask] = useState("");
+
+  const handleLogoLight = () => {
+    const logo = document.querySelector(".header__img");
+    logo.classList.add("active");
+    setTimeout(() => {
+      logo.classList.remove("active");
+    }, 1000);
+  };
+
+  const handleAddButtonLoading = (action) => {
+    const loading = document.querySelector(".main__loading-btn");
+    if (action === "remove") loading.classList.remove("active");
+    else if (action === "add") loading.classList.add("active");
+  };
 
   const handleInputs = (e) => {
     if (e.target.name === "add-task") {
@@ -25,6 +41,9 @@ const MainPageLogged = (props) => {
 
   const addTask = async (e) => {
     e.preventDefault();
+    const loading = setTimeout(() => {
+      handleAddButtonLoading("add");
+    }, 500);
     await fetch(`${API}/tasks/addTask`, {
       method: "POST",
       headers: {
@@ -39,9 +58,18 @@ const MainPageLogged = (props) => {
       .then((e) => e.json())
       .then((e) => {
         setwriteTask("");
+        handleLogoLight();
+        clearTimeout(loading);
+        handleAddButtonLoading("remove");
+        handleMessagePopup("Task has been added successfully.");
+        props.getAllTasks();
       })
-      .catch((err) => alert("We occure an error."));
-    props.getAllTasks();
+      .catch((err) => {
+        handleMessagePopup("We occure an error.");
+        clearTimeout(loading);
+        handleAddButtonLoading("remove");
+        props.getAllTasks();
+      });
   };
 
   const removeTask = async (taskID) => {
@@ -56,11 +84,13 @@ const MainPageLogged = (props) => {
     })
       .then((e) => e.json())
       .then((res) => {
+        props.getAllTasks();
+        handleMessagePopup("Task has been removed successfully.");
       })
       .catch((err) => {
-        alert(err);
+        props.getAllTasks();
+        handleMessagePopup("We occure an error.");
       });
-    props.getAllTasks();
   };
 
   const editTask = async (changedTask) => {
@@ -75,11 +105,12 @@ const MainPageLogged = (props) => {
     })
       .then((e) => e.json())
       .then((res) => {
+        props.getAllTasks();
       })
       .catch((err) => {
-        alert(err);
+        handleMessagePopup("We occure an error with edit.");
+        props.getAllTasks();
       });
-    props.getAllTasks();
   };
 
   useEffect(() => {
@@ -120,11 +151,11 @@ const MainPageLogged = (props) => {
       if (a.deadline === "Add deadline") {
         return 1;
       } else {
-        return Date.parse(a.deadline) - Date.parse(b.deadline)
-      };
-    }
-    const taskChecked = taskList.filter(e => e.checked).sort(sortFunc)
-    const taskUnchecked = taskList.filter(e => !e.checked).sort(sortFunc)
+        return Date.parse(a.deadline) - Date.parse(b.deadline);
+      }
+    };
+    const taskChecked = taskList.filter((e) => e.checked).sort(sortFunc);
+    const taskUnchecked = taskList.filter((e) => !e.checked).sort(sortFunc);
     taskList = taskUnchecked.concat(taskChecked);
     taskList = taskList.map((e) => (
       <TaskElement
@@ -154,6 +185,7 @@ const MainPageLogged = (props) => {
                   }}
                 />
                 <button
+                  className="main__add-btn"
                   type="submit"
                   onClick={(e) => {
                     addTask(e);
@@ -161,6 +193,9 @@ const MainPageLogged = (props) => {
                 >
                   <i className="fas fa-plus"></i>
                 </button>
+                <div className="main__loading-btn">
+                  <i className="fas fa-spinner"></i>
+                </div>
                 <span
                   dataname="add-task"
                   onClick={(e) => {

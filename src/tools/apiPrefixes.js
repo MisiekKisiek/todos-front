@@ -1,1 +1,1 @@
-export const APIPrefix = "";
+export const APIPrefix = "http://localhost:8000";

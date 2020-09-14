@@ -3,14 +3,14 @@ import { Route, Switch, Redirect } from "react-router-dom";
 
 import LoginComponent from "../components/LoginComponent";
 import RegisterComponent from "../components/RegisterComponent";
-import Logged from '../components/MainPageLogged';
-import Unlogged from '../components/MainPageUnlogged';
-import UserPanel from '../components/UserPanel';
+import Logged from "../components/MainPageLogged";
+import Unlogged from "../components/MainPageUnlogged";
+import UserPanel from "../components/UserPanel";
 
 import { connect } from "react-redux";
 import { getAllTasks } from "../actions/index";
 
-import { APIPrefix as API } from '../tools/apiPrefixes'
+import { APIPrefix as API } from "../tools/apiPrefixes";
 
 class MainPage extends Component {
   constructor(props) {
@@ -22,20 +22,22 @@ class MainPage extends Component {
     fetch(`${API}/tasks/getAllTasks`, {
       headers: { Authorization: `bearer ${localStorage.getItem("token")}` },
     })
-      .then((e) => e.json(), (err) => {
-      }
+      .then(
+        (e) => e.json(),
+        (err) => {}
       )
       .then(async (tasks) => {
-        if (localStorage.getItem('logged') === "true") {
+        if (localStorage.getItem("logged") === "true") {
           await this.props.getAllTasks(tasks);
         }
-      }).catch(err => {
+      })
+      .catch((err) => {
         localStorage.setItem("token", "");
         localStorage.setItem("logged", false);
         this.props.forceUpdateApp();
         this.forceUpdate();
-        // alert('You have been logged out.')
-      })
+        this.props.handleMessagePopup("You have been logged out.");
+      });
   };
 
   handleLabelStyle = (tab) => {
@@ -57,26 +59,39 @@ class MainPage extends Component {
               {this.props.logged === "false" ? (
                 <Unlogged></Unlogged>
               ) : (
-                  <Logged getAllTasks={this.getAllTasks}></Logged>
-                )}
+                <Logged
+                  getAllTasks={this.getAllTasks}
+                  handleMessagePopup={this.props.handleMessagePopup}
+                ></Logged>
+              )}
             </Route>
             <Route path="/LogIn">
               {this.props.logged === "false" ? (
                 <LoginComponent
                   handleLabelStyle={this.handleLabelStyle}
                   forceUpdateApp={this.props.forceUpdateApp}
+                  handleMessagePopup={this.props.handleMessagePopup}
                 ></LoginComponent>
               ) : (
-                  <Redirect to="/"></Redirect>
-                )}
+                <Redirect to="/"></Redirect>
+              )}
             </Route>
             <Route path="/Register">
-              {this.props.logged === "false" ? <RegisterComponent
-                handleLabelStyle={this.handleLabelStyle}
-              ></RegisterComponent> : <Redirect to="/"></Redirect>}
+              {this.props.logged === "false" ? (
+                <RegisterComponent
+                  handleLabelStyle={this.handleLabelStyle}
+                  handleMessagePopup={this.props.handleMessagePopup}
+                ></RegisterComponent>
+              ) : (
+                <Redirect to="/"></Redirect>
+              )}
             </Route>
-            <Route path='/User'>
-              {this.props.logged === "true" ? <UserPanel></UserPanel> : <Redirect to='/'></Redirect>}
+            <Route path="/User">
+              {this.props.logged === "true" ? (
+                <UserPanel></UserPanel>
+              ) : (
+                <Redirect to="/"></Redirect>
+              )}
             </Route>
             <Redirect to="/"></Redirect>
           </Switch>

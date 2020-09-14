@@ -1,9 +1,9 @@
 import React, { useState, useRef } from "react";
 import { NavLink } from "react-router-dom";
-import { APIPrefix as API } from '../tools/apiPrefixes'
+import { APIPrefix as API } from "../tools/apiPrefixes";
 
 const RegisterComponent = (props) => {
-  const { handleLabelStyle } = props;
+  const { handleLabelStyle, handleMessagePopup } = props;
 
   const [loginInput, setloginInput] = useState("");
   const [emailInput, setemailInput] = useState("");
@@ -16,7 +16,7 @@ const RegisterComponent = (props) => {
   const passwordLabelElement = useRef(null);
   const passwordInputElement = useRef(null);
 
-  const correctFormPopup = useRef(null)
+  const correctFormPopup = useRef(null);
 
   const handleInputs = (e) => {
     switch (e.target.name) {
@@ -37,17 +37,27 @@ const RegisterComponent = (props) => {
   const registerFormSubmit = (e, login, email, pass) => {
     e.preventDefault();
     if (login.length < 5) {
-      correctFormPopup.current.classList.add('register__correct_form_popup--active');
-      correctFormPopup.current.textContent = 'Login has to have more than 5 characters!';
+      correctFormPopup.current.classList.add(
+        "register__correct_form_popup--active"
+      );
+      correctFormPopup.current.textContent =
+        "Login has to have more than 5 characters!";
     } else if (!email.includes("@") || !email.includes(".")) {
-      correctFormPopup.current.classList.add('register__correct_form_popup--active');
-      correctFormPopup.current.textContent = 'Email is invalid!';
+      correctFormPopup.current.classList.add(
+        "register__correct_form_popup--active"
+      );
+      correctFormPopup.current.textContent = "Email is invalid!";
     } else if (pass.length < 8) {
-      correctFormPopup.current.classList.add('register__correct_form_popup--active');
-      correctFormPopup.current.textContent = 'Password has to have more than 8 characters!';
+      correctFormPopup.current.classList.add(
+        "register__correct_form_popup--active"
+      );
+      correctFormPopup.current.textContent =
+        "Password has to have more than 8 characters!";
     } else {
-      correctFormPopup.current.classList.remove('register__correct_form_popup--active');
-      correctFormPopup.current.textContent = '';
+      correctFormPopup.current.classList.remove(
+        "register__correct_form_popup--active"
+      );
+      correctFormPopup.current.textContent = "";
       fetch(`${API}/auth/Register`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
@@ -60,18 +70,20 @@ const RegisterComponent = (props) => {
       })
         .then((e) => e.json())
         .then((e) => {
-          alert(e);
+          handleMessagePopup(e);
           setloginInput("");
           setemailInput("");
           setpasswordInput("");
-          handleLabelStyle([[loginInputElement, loginLabelElement], [emailInputElement, emailLabelElement], [passwordInputElement, passwordLabelElement]]);
+          handleLabelStyle([
+            [loginInputElement, loginLabelElement],
+            [emailInputElement, emailLabelElement],
+            [passwordInputElement, passwordLabelElement],
+          ]);
         })
         .catch((err) => {
-          alert(err);
+          handleMessagePopup("We occure an error.");
         });
     }
-
-
   };
 
   return (
@@ -86,7 +98,10 @@ const RegisterComponent = (props) => {
           </nav>
           <h1 className="register__title">
             Join and optimalize your work!
-            <div className="register__correct_form_popup" ref={correctFormPopup}></div>
+            <div
+              className="register__correct_form_popup"
+              ref={correctFormPopup}
+            ></div>
           </h1>
           <form action="register" className="register__form">
             <div className="register__form-login">
@@ -127,7 +142,7 @@ const RegisterComponent = (props) => {
                 value={passwordInput}
                 onChange={(e) => {
                   handleLabelStyle([
-                    [passwordInputElement, passwordLabelElement]
+                    [passwordInputElement, passwordLabelElement],
                   ]);
                   handleInputs(e);
                 }}
@@ -139,7 +154,7 @@ const RegisterComponent = (props) => {
             <button
               type="submit"
               onClick={(e) => {
-                registerFormSubmit(e, loginInput, emailInput, passwordInput)
+                registerFormSubmit(e, loginInput, emailInput, passwordInput);
               }}
             >
               Register!
