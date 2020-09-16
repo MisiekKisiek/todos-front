@@ -151,12 +151,15 @@ const MainPageLogged = (props) => {
       if (a.deadline === "Add deadline") {
         return 1;
       } else {
-        return Date.parse(a.deadline) - Date.parse(b.deadline);
+        return b.deadline === "Add deadline"
+          ? -1
+          : Date.parse(a.deadline) - Date.parse(b.deadline);
       }
     };
     const taskChecked = taskList.filter((e) => e.checked).sort(sortFunc);
     const taskUnchecked = taskList.filter((e) => !e.checked).sort(sortFunc);
     taskList = taskUnchecked.concat(taskChecked);
+    console.log(taskList);
     taskList = taskList.map((e) => (
       <TaskElement
         element={e}
