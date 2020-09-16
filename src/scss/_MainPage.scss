@@ -217,6 +217,9 @@
         text-align: center;
         font-family: Georgia, "Times New Roman", Times, serif;
         color: #222;
+        span {
+          color: coral;
+        }
       }
       .main__unlogged-login {
         font-size: 18px;
