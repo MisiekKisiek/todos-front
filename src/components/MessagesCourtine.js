@@ -13,7 +13,7 @@ const MessagesCourtine = ({ handleMessagePopup }) => {
         ></div>
         <div className="courtine__wrap-message">
           <h2 className="courtine__header">Message</h2>
-          <div className="courtine__message">tfasfasfasfas</div>
+          <div className="courtine__message"></div>
           <form className="courtine__form">
             <button
               className="courtine__btn"

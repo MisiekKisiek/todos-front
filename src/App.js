@@ -26,6 +26,7 @@ class App extends Component {
     localStorage.setItem("user", "");
     localStorage.setItem("email", "");
     this.forceUpdateApp();
+    this.handleMessagePopup("You have been logged out.");
   };
 
   componentDidMount() {
@@ -44,6 +45,7 @@ class App extends Component {
   };
 
   render() {
+    console.log('logged',this.state.logged);
     return (
       <div className="App">
         <Header logged={this.state.logged} logOut={this.logOut}></Header>
