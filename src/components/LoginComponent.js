@@ -104,9 +104,9 @@ const LoginComponent = (props) => {
             <button
               type="submit"
               onClick={async (e) => {
-                loginFormSubmit(e);
-                await setloginInput("");
-                await setpasswordInput("");
+                await loginFormSubmit(e);
+                setloginInput("");
+                setpasswordInput("");
                 handleLabelStyle([
                   [loginInputElement, loginLabelElement],
                   [passwordInputElement, passwordLabelElement],
