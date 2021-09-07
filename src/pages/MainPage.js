@@ -36,7 +36,7 @@ class MainPage extends Component {
         localStorage.setItem("logged", false);
         this.props.forceUpdateApp();
         this.forceUpdate();
-        this.props.handleMessagePopup("You have been logged out.");
+        if(localStorage.getItem("logged") === false) this.props.handleMessagePopup("You have been logged out.");
       });
   };
 

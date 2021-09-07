@@ -13,6 +13,8 @@ const LoginComponent = (props) => {
   const passwordLabelElement = useRef(null);
   const passwordInputElement = useRef(null);
 
+  const correctFormPopup = useRef(null);
+
   const handleInputs = (e) => {
     switch (e.target.name) {
       case "login":
@@ -26,33 +28,46 @@ const LoginComponent = (props) => {
     }
   };
 
-  const loginFormSubmit = (e) => {
+  const loginFormSubmit = (e, login, pass) => {
     e.preventDefault();
-    fetch(`${API}/auth/Login`, {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
-      mode: "cors",
-      body: JSON.stringify({
-        login: loginInput,
-        password: passwordInput,
-      }),
-    })
-      .then((e) => {
-        if (e.status === 200) return e.json();
-        if (e.status === 401) throw Error("Username or login are invalid");
-        else throw Error("We have some problems, sorry");
+    if (login.length < 1) {
+      correctFormPopup.current.classList.add(
+        "register__correct_form_popup--active"
+      );
+      correctFormPopup.current.textContent =
+        "Type login.";
+    } else if (pass.length < 1) {
+      correctFormPopup.current.classList.add(
+        "register__correct_form_popup--active"
+      );
+      correctFormPopup.current.textContent = "Type password.";
+    } else{
+      fetch(`${API}/auth/Login`, {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        mode: "cors",
+        body: JSON.stringify({
+          login: loginInput,
+          password: passwordInput,
+        }),
       })
-      .then(async (e) => {
-        await localStorage.setItem("token", e.token);
-        await localStorage.setItem("logged", true);
-        await localStorage.setItem("user", e.user);
-        await localStorage.setItem("email", e.email);
-        handleMessagePopup("You have been logged.");
-        props.forceUpdateApp();
-      })
-      .catch((err) => {
-        handleMessagePopup(err.message);
-      });
+        .then((e) => {
+          if (e.status === 200) return e.json();
+          if (e.status === 401) throw Error("Username or login are invalid");
+          else throw Error("We have some problems, sorry");
+        })
+        .then(async (e) => {
+          await localStorage.setItem("token", e.token);
+          await localStorage.setItem("logged", true);
+          await localStorage.setItem("user", e.user);
+          await localStorage.setItem("email", e.email);
+          handleMessagePopup("You have been logged.");
+          props.forceUpdateApp();
+        })
+        .catch((err) => {
+          handleMessagePopup(err.message);
+        });
+    }
   };
 
   return (
@@ -65,7 +80,13 @@ const LoginComponent = (props) => {
               <span>Main Page</span>
             </NavLink>
           </nav>
-          <h1 className="login__title">Login and organize!</h1>
+          <h1 className="login__title">
+            Login and organize!
+            <div
+              className="login__correct_form_popup"
+              ref={correctFormPopup}
+            ></div>
+          </h1>
           <form action="login" className="login__form">
             <div className="login__form-login">
               <input
@@ -104,7 +125,7 @@ const LoginComponent = (props) => {
             <button
               type="submit"
               onClick={async (e) => {
-                await loginFormSubmit(e);
+                await loginFormSubmit(e, loginInputElement, passwordInputElement);
                 setloginInput("");
                 setpasswordInput("");
                 handleLabelStyle([
