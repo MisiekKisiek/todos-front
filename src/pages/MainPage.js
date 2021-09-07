@@ -56,13 +56,12 @@ class MainPage extends Component {
         <main className="main">
           <Switch>
             <Route exact path="/">
-              {this.props.logged === "false" ? (
-                <Unlogged></Unlogged>
-              ) : (
+              {this.props.logged === "true" ? (
                 <Logged
                   getAllTasks={this.getAllTasks}
                   handleMessagePopup={this.props.handleMessagePopup}
-                ></Logged>
+                ></Logged>) : (
+                <Unlogged></Unlogged>
               )}
             </Route>
             <Route path="/LogIn">
