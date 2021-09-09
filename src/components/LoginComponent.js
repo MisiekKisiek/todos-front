@@ -32,16 +32,20 @@ const LoginComponent = (props) => {
     e.preventDefault();
     if (login.length < 1) {
       correctFormPopup.current.classList.add(
-        "register__correct_form_popup--active"
+        "login__correct_form_popup--active"
       );
       correctFormPopup.current.textContent =
         "Type login.";
     } else if (pass.length < 1) {
       correctFormPopup.current.classList.add(
-        "register__correct_form_popup--active"
+        "login__correct_form_popup--active"
       );
       correctFormPopup.current.textContent = "Type password.";
     } else{
+      correctFormPopup.current.classList.remove(
+        "login__correct_form_popup--active"
+      );
+      correctFormPopup.current.textContent = "";
       fetch(`${API}/auth/Login`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
@@ -61,10 +65,22 @@ const LoginComponent = (props) => {
           await localStorage.setItem("logged", true);
           await localStorage.setItem("user", e.user);
           await localStorage.setItem("email", e.email);
+          setloginInput("");
+          setpasswordInput("");
+          handleLabelStyle([
+            [loginInputElement, loginLabelElement],
+            [passwordInputElement, passwordLabelElement],
+          ]);
           handleMessagePopup("You have been logged.");
           props.forceUpdateApp();
         })
         .catch((err) => {
+          setloginInput("");
+          setpasswordInput("");
+          handleLabelStyle([
+            [loginInputElement, loginLabelElement],
+            [passwordInputElement, passwordLabelElement],
+          ]);
           handleMessagePopup(err.message);
         });
     }
@@ -125,13 +141,7 @@ const LoginComponent = (props) => {
             <button
               type="submit"
               onClick={async (e) => {
-                await loginFormSubmit(e, loginInputElement, passwordInputElement);
-                setloginInput("");
-                setpasswordInput("");
-                handleLabelStyle([
-                  [loginInputElement, loginLabelElement],
-                  [passwordInputElement, passwordLabelElement],
-                ]);
+                loginFormSubmit(e, loginInput, passwordInput);
               }}
             >
               Log in!
