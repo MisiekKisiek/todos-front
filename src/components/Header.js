@@ -31,7 +31,7 @@ const Header = (props) => {
             <h2 className="header__title">toDos App</h2>
           </div>
           <ul className="header__user-list">
-            {props.logged === "true" ? (
+            {localStorage.getItem("logged") === "true" ? (
               <>
                 <li className="header__user-item-login">
                   <NavLink
@@ -90,7 +90,7 @@ const Header = (props) => {
               </>
             )}
           </ul>
-          {props.logged === "true" ? (
+          {localStorage.getItem("logged") === "true" ? (
             <div className="header__logged-search-task">
               <label htmlFor="search-task">
                 <input
@@ -122,7 +122,7 @@ const Header = (props) => {
             <></>
           )}
           <div className="header__logged-user-icon" onClick={showMenu}>
-            {props.logged === "true" ? (
+            {localStorage.getItem("logged") === "true" ? (
               <i className="fas fa-user-circle"></i>
             ) : (
               <i className="fas fa-bars"></i>

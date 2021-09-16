@@ -48,16 +48,16 @@ class App extends Component {
     console.log('logged',this.state.logged);
     return (
       <div className="App">
-        <Header logged={this.state.logged} logOut={this.logOut}></Header>
+        <Header logged={this.state.logged} logOut={this.logOut}/>
         <MainPage
           forceUpdateApp={this.forceUpdateApp}
           logged={this.state.logged}
           handleMessagePopup={this.handleMessagePopup}
-        ></MainPage>
-        <Footer></Footer>
+        />
+        <Footer/>
         <MessagesCourtine
           handleMessagePopup={this.handleMessagePopup}
-        ></MessagesCourtine>
+        />
       </div>
     );
   }

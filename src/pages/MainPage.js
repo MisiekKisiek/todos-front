@@ -56,43 +56,43 @@ class MainPage extends Component {
         <main className="main">
           <Switch>
             <Route exact path="/">
-              {this.props.logged === "true" ? (
+              {localStorage.getItem("logged") === "true" ? (
                 <Logged
                   getAllTasks={this.getAllTasks}
                   handleMessagePopup={this.props.handleMessagePopup}
-                ></Logged>) : (
-                <Unlogged></Unlogged>
+                />) : (
+                <Unlogged/>
               )}
             </Route>
             <Route path="/LogIn">
-              {this.props.logged === "false" ? (
+              {localStorage.getItem("logged") === "true" ? (
+                <Redirect to="/"/>
+              ) : (
                 <LoginComponent
                   handleLabelStyle={this.handleLabelStyle}
                   forceUpdateApp={this.props.forceUpdateApp}
                   handleMessagePopup={this.props.handleMessagePopup}
-                ></LoginComponent>
-              ) : (
-                <Redirect to="/"></Redirect>
+                />
               )}
             </Route>
             <Route path="/Register">
-              {this.props.logged === "false" ? (
+              {localStorage.getItem("logged") === "true" ? (
+                <Redirect to="/"/>
+              ) : (
                 <RegisterComponent
                   handleLabelStyle={this.handleLabelStyle}
                   handleMessagePopup={this.props.handleMessagePopup}
-                ></RegisterComponent>
-              ) : (
-                <Redirect to="/"></Redirect>
+                />
               )}
             </Route>
             <Route path="/User">
               {this.props.logged === "true" ? (
-                <UserPanel></UserPanel>
+                <UserPanel/>
               ) : (
-                <Redirect to="/"></Redirect>
+                <Redirect to="/"/>
               )}
             </Route>
-            <Redirect to="/"></Redirect>
+            <Redirect to="/"/>
           </Switch>
         </main>
       </>
